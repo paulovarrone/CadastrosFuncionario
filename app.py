@@ -139,7 +139,12 @@ def select_dados_cadastrais():
 
             if not pessoa:
                 flash('Usuário não encontrado no sistema.', 'erro')
-            
+            else:
+                # Adicionar prefixo de Base64 para as imagens
+                if pessoa.get('foto'):
+                    pessoa['foto'] = f"data:image/jpeg;base64,{pessoa['foto']}"
+                if pessoa.get('assinatura'):
+                    pessoa['assinatura'] = f"data:image/jpeg;base64,{pessoa['assinatura']}"
             
 
 
@@ -150,7 +155,7 @@ def select_dados_cadastrais():
             cursor.close()
             conexao.close()
 
-        return redirect(url_for('select_dados_cadastrais'))
+        # return redirect(url_for('select_dados_cadastrais'))
 
 
     return render_template('select.html', pessoa=pessoa)
