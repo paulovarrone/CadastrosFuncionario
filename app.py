@@ -214,7 +214,7 @@ def selecionar_e_cadastrar():
 
                     cursor.execute(query, valores)
                     conexao.commit()
-                    flash('Fotos atualizadas com sucesso.', 'sucesso')
+                    flash('Assinatura e Foto atualizada com sucesso.', 'sucesso')
                 else:
                     flash('Usuário não encontrado para atualizar as fotos.', 'erro')
 
@@ -229,9 +229,9 @@ def selecionar_e_cadastrar():
 
         return render_template('carteira.html')
 
-    if 'selectFuncionario' in request.form:
+    if 'status' in request.form:
         return select()
-    elif 'cadastrarCarteirinha' in request.form:
+    elif 'foto' in request.form:
         return cadastro_apos_selecao()
 
     return render_template('carteira.html')
