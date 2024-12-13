@@ -1,70 +1,63 @@
 {% from "macros/macros.jinja2" import validacao %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro Funcionário</title>
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/carteira.css">
 </head>
 <body>
   <div class="menu">
     <a href="/"><button>Adicionar funcionário</button></a>
-    <!-- <a href="./alterar"><button>Alterar dados do funcionário</button></a> -->
     <a href="./selecionar"><button>Selecionar funcionário</button></a> 
     <a href="./carteiradigital"><button>Cadastrar carteira digital</button></a>
   </div>
   <h2>SELEÇÃO DE FUNCIONÁRIO</h2>
   <div class="container">
-        <form class="form-container" method="POST" action="/selecionar" enctype="multipart/form-data">
-        <div class="form">
-            <label for="name">Nome:</label>
-            <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
+    <form class="form-container" method="POST" action="/selecionar" enctype="multipart/form-data">
+      <div class="form">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
 
-            <label for="matricula">Matrícula:</label>
-            <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula" required>
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula" required>
 
-            <label for="nascimento">Data de nascimento:</label>
-            <input type="date" id="nascimento" name="nascimento" readonly value="{{ pessoa.nascimento if pessoa else '' }}">
+        <label for="nascimento">Data de nascimento:</label>
+        <input type="date" id="nascimento" name="nascimento" readonly value="{{ pessoa.nascimento if pessoa else '' }}">
 
-            <label for="contratacao">Data de contratação:</label>
-            <input type="date" id="contratacao" name="contratacao" readonly value="{{ pessoa.contratacao if pessoa else '' }}">
+        <label for="contratacao">Data de contratação:</label>
+        <input type="date" id="contratacao" name="contratacao" readonly value="{{ pessoa.contratacao if pessoa else '' }}">
 
-            <label for="status">Status:</label>
-            <input type="text" id="status" name="status" value="{{ pessoa.status if pessoa else '' }}" placeholder="Status do funcionário" readonly>
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" value="{{ pessoa.status if pessoa else '' }}" placeholder="Status do funcionário" readonly>
 
-            
-            <button id="selectFuncionario" type="submit">Selecionar funcionário</button>
-                
+        <button id="selectFuncionario" type="submit">Selecionar funcionário</button>
+      </div>
+    </form>
+
+    <form class="form-container" method="POST" action="/cadastro" enctype="multipart/form-data">
+      <div class="photo-section">
+        <div class="photo-container">
+          <label for="foto">Foto do funcionário:</label>
+          <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')" required>
+          <img id="imgFoto" src="" alt="Pré-visualização da Foto">
         </div>
 
-        
-        </form>
+        <div class="photo-container">
+          <label for="assinatura">Assinatura do funcionário:</label>
+          <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')" required>
+          <img id="imgAssinatura" src="" alt="Pré-visualização da Assinatura">
+        </div>
+      </div>
 
-        <form class="form-container" method="POST" action="/cadastro" enctype="multipart/form-data">
-            <div class="photo-section">
-                <div class="photo-container">
-                <label for="foto">Foto do funcionário:</label>
-                <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')" required>
-                <img id="imgFoto" src="" alt="Pré-visualização da Foto">
-                </div>
-        
-                <div class="photo-container">
-                <label for="assinatura">Assinatura do funcionário:</label>
-                <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')" required>
-                <img id="imgAssinatura" src="" alt="Pré-visualização da Assinatura">
-                </div>
-            </div>
-
-            <button id="cadastrarCarteirinha" type="submit">Cadastrar carteirinha</button> 
-        </form>
-        
-        <br>
-        
-        {{ validacao() }}
-  
-    </div>
+      <button id="cadastrarCarteirinha" type="submit">Cadastrar carteirinha</button>
+    </form>
+    <br>
+    {{ validacao() }}
+  </div>
 
   <footer>Pode colocar o que você quiser aqui</footer>
 
