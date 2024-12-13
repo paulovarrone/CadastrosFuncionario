@@ -161,6 +161,10 @@ def select_dados_cadastrais():
     return render_template('select.html', pessoa=pessoa)
 
 
+@app.route('/carteiradigital', methods=['GET', 'POST'])
+def selecionar_e_cadastrar():
+    return render_template('carteira.html')
+
 if __name__ == '__main__':
     criar_banco()
     criar_funcionario()
