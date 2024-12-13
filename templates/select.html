@@ -1,0 +1,70 @@
+{% from "macros/macros.jinja2" import validacao %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro funcionário</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+  <div class="menu">
+    <a href="/"><button >Adicionar funcionário</button></a>
+    <a href="./alterar"><button >Alterar dados do funcionário</button></a>
+    <a href="./selecionar"><button >Selecionar funcionário</button></a>
+  </div>
+
+  <div class="container">
+    <div class="form-container">
+      <form class="form" method="POST" action="/cadastro" enctype="multipart/form-data">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="nome" placeholder="Digite o nome">
+
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula">
+
+        <label for="nascimento">Data de nascimento:</label>
+        <input type="date" id="nascimento" name="nascimento" placeholder="Digite a data de nascimento">
+        
+        <label for="contratacao">Data de contratação:</label>
+        <input type="date" id="contratacao" name="contratacao" placeholder="Digite a data de contratação">
+
+        <label for="Status">Status</label>
+            <select id="status" name="status">
+                <option value="">Selecione o Status</option>
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+                <option value="Desligado">Desligado</option>
+            </select>
+        
+
+        <button id="cadastrarFuncinario" type="submit">Cadastrar</button>
+        
+        <div class="photo-section">
+          <div class="photo-container">
+            <label for="photo1">Foto do funcionário:</label>
+            <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')">
+            <img id="imgFoto" src="" alt="Pré-visualização da Foto 1">
+          </div>
+          
+          <div class="photo-container">
+            <label for="photo2">Assinatura do funcionário:</label>
+            <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')">
+            <img id="imgAssinatura" src="" alt="Pré-visualização da Foto 2">
+          </div>
+        </div>
+      </form>
+    </div>
+    <br>
+    <br>
+    {{ validacao() }}
+  </div>
+
+  <footer>Pode colocar o que vc quiser aqui</footer>
+
+<script src="../static/scripts/scripts.js"></script>
+
+</body>
+</html>
