@@ -40,18 +40,18 @@
         <div class="photo-container">
           <label>Foto do Funcionário:</label>
           {% if pessoa and pessoa.foto %}
-            <img id="imgFoto" src="{{ pessoa.foto }}" alt="Foto do funcionário" style="max-width: 150px; height: auto;">
+            <img id="imgFoto" src="{{ pessoa.foto }}" alt="Foto do funcionário" >
           {% else %}
-            <img id="imgFoto" src="" alt="Foto não disponível" style="max-width: 150px; height: auto;">
+            <img id="imgFoto" src="" alt="Foto não disponível" >
           {% endif %}
         </div>
 
         <div class="photo-container">
           <label>Assinatura do Funcionário:</label>
           {% if pessoa and pessoa.assinatura %}
-            <img id="imgAssinatura" src="{{ pessoa.assinatura }}" alt="Assinatura do funcionário" style="max-width: 150px; height: auto;">
+            <img id="imgAssinatura" src="{{ pessoa.assinatura }}" alt="Assinatura do funcionário" >
           {% else %}
-            <img id="imgAssinatura" src="" alt="Assinatura não disponível" style="max-width: 150px; height: auto;">
+            <img id="imgAssinatura" src="" alt="Assinatura não disponível" >
           {% endif %}
         </div>
       </div>
