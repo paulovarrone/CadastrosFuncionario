@@ -1,12 +1,11 @@
 {% from "macros/macros.jinja2" import validacao %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro Funcionário</title>
+  <title>Cadastro de carteirinha</title>
   <link rel="stylesheet" href="../static/css/carteira.css">
 </head>
 <body>
@@ -15,7 +14,7 @@
     <a href="./selecionar"><button>Selecionar funcionário</button></a> 
     <a href="./carteiradigital"><button>Cadastrar carteira digital</button></a>
   </div>
-  <h2>SELEÇÃO DE FUNCIONÁRIO</h2>
+  <h2>CADASTRO DE CARTEIRA DIGITAL</h2>
   <div class="container">
     <form class="form-container" method="POST" action="/selecionar" enctype="multipart/form-data">
       <div class="form">
