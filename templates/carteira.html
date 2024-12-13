@@ -47,6 +47,8 @@
   
           <label for="status">Status:</label>
           <input type="text" id="status" name="status" value="{{ pessoa.status if pessoa else '' }}" placeholder="Status do funcionário" readonly>
+        
+          <button id="cadastrarCarteirinha" type="submit">Cadastrar carteirinha</button>
         </div>
   
         <div class="photo-section">
@@ -61,9 +63,9 @@
             <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')" required>
             <img id="imgAssinatura" src="" alt="Assinatura não disponível">
           </div>
+          
         </div>
   
-        <button id="cadastrarCarteirinha" type="submit">Cadastrar carteirinha</button>
       </form>
       
     </div>
