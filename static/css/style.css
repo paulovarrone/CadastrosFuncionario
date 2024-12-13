@@ -104,7 +104,7 @@ footer {
   box-sizing: border-box;
 }
 
-#cadastrarFuncionario {
+#cadastrarFuncionario, #selectFuncionario {
   width: 120px;
   height: 40px;
   font-size: 16px;
