@@ -163,19 +163,17 @@ def select_dados_cadastrais():
 
 @app.route('/carteiradigital', methods=['GET', 'POST'])
 def selecionar_e_cadastrar():
-    def select():
-        pessoa = None
+    pessoa = None
+    if request.method == 'POST':
+        matricula = request.form.get('matricula', '').strip()
 
-        if request.method == 'POST':
-            matricula = request.form['matricula'].strip()
-
+        # Processo de seleção do funcionário
+        if 'foto' not in request.files:
             try:
                 conexao = connection()
                 cursor = conexao.cursor(dictionary=True)
-
                 cursor.execute('SELECT * FROM funcionario WHERE matricula = %s', (matricula,))
                 pessoa = cursor.fetchone()
-                print(pessoa)
                 if not pessoa:
                     flash('Usuário não encontrado no sistema.', 'erro')
             except Exception as e:
@@ -183,18 +181,13 @@ def selecionar_e_cadastrar():
             finally:
                 cursor.close()
                 conexao.close()
-
-        return render_template('carteira.html', pessoa=pessoa)
-
-    def cadastro_apos_selecao():
-        if request.method == 'POST':
-            matricula = request.form['matricula'].strip()
-            print(matricula)
+        else:
+            # Processo de atualização de fotos e assinatura
             foto = request.files.get('foto')
             assinatura = request.files.get('assinatura')
 
-            if not (foto and assinatura):
-                flash('Foto e assinatura são obrigatórios.', 'erro')
+            if not matricula:
+                flash('Matrícula é obrigatória para atualizar fotos.', 'erro')
                 return redirect(url_for('selecionar_e_cadastrar'))
 
             foto_b64 = imagem_para_base64(foto)
@@ -203,44 +196,23 @@ def selecionar_e_cadastrar():
             try:
                 conexao = connection()
                 cursor = conexao.cursor(dictionary=True)
-
-                # Verifica se o funcionário já existe
                 cursor.execute("SELECT * FROM funcionario WHERE matricula = %s", (matricula,))
                 pessoa = cursor.fetchone()
-
                 if pessoa:
-                    print(f"Funcionário encontrado: {pessoa}")
-                    # Atualiza as fotos e assinatura
-                    query = ("UPDATE funcionario SET foto = %s, assinatura = %s WHERE matricula = %s")
-                    valores = (foto_b64, assinatura_b64, matricula)
-
-                    cursor.execute(query, valores)
+                    query = "UPDATE funcionario SET foto = %s, assinatura = %s WHERE matricula = %s"
+                    cursor.execute(query, (foto_b64, assinatura_b64, matricula))
                     conexao.commit()
-                    flash('Assinatura e Foto atualizada com sucesso.', 'sucesso')
+                    flash('Foto e assinatura atualizadas com sucesso.', 'sucesso')
                 else:
-                    flash('Usuário não encontrado para atualizar as fotos.', 'erro')
-
-            except mysql.connector.Error as e:
-                flash(f"Erro no MySQL: {e.msg}", 'erro')
-
+                    flash('Usuário não encontrado para atualizar fotos.', 'erro')
             except Exception as e:
-                flash(f"Erro ao atualizar fotos: {e}", 'erro')
-
+                flash(f'Erro ao atualizar dados: {e}', 'erro')
             finally:
                 cursor.close()
                 conexao.close()
 
-            return redirect(url_for('selecionar_e_cadastrar'))
+    return render_template('carteira.html', pessoa=pessoa)
 
-        return render_template('carteira.html')
-
-    if 'status' in request.form:
-        return select()
-    elif 'foto' and 'assinatura' in request.form:
-        return cadastro_apos_selecao()
-    
-
-    return render_template('carteira.html')
 
 if __name__ == '__main__':
     criar_banco()
