@@ -175,7 +175,7 @@ def selecionar_e_cadastrar():
 
                 cursor.execute('SELECT * FROM funcionario WHERE matricula = %s', (matricula,))
                 pessoa = cursor.fetchone()
-
+                print(pessoa)
                 if not pessoa:
                     flash('Usuário não encontrado no sistema.', 'erro')
             except Exception as e:
@@ -189,6 +189,7 @@ def selecionar_e_cadastrar():
     def cadastro_apos_selecao():
         if request.method == 'POST':
             matricula = request.form['matricula'].strip()
+            print(matricula)
             foto = request.files.get('foto')
             assinatura = request.files.get('assinatura')
 
@@ -235,8 +236,9 @@ def selecionar_e_cadastrar():
 
     if 'status' in request.form:
         return select()
-    elif 'foto' in request.form:
+    elif 'foto' and 'assinatura' in request.form:
         return cadastro_apos_selecao()
+    
 
     return render_template('carteira.html')
 
