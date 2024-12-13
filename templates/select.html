@@ -5,66 +5,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro funcionário</title>
+  <title>Cadastro Funcionário</title>
   <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-
   <div class="menu">
-    <a href="/"><button >Adicionar funcionário</button></a>
-    <a href="./alterar"><button >Alterar dados do funcionário</button></a>
-    <a href="./selecionar"><button >Selecionar funcionário</button></a>
+    <a href="/"><button>Adicionar funcionário</button></a>
+    <!-- <a href="./alterar"><button>Alterar dados do funcionário</button></a> -->
+    <a href="./selecionar"><button>Selecionar funcionário</button></a> 
   </div>
 
   <div class="container">
-    <div class="form-container">
-      <form class="form" method="POST" action="/cadastro" enctype="multipart/form-data">
+    <form class="form-container" method="POST" action="/selecionar" enctype="multipart/form-data">
+      <div class="form">
         <label for="name">Nome:</label>
-        <input type="text" id="name" name="nome" placeholder="Digite o nome">
+        <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
 
         <label for="matricula">Matrícula:</label>
-        <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula">
+        <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula" required>
 
         <label for="nascimento">Data de nascimento:</label>
-        <input type="date" id="nascimento" name="nascimento" placeholder="Digite a data de nascimento">
-        
+        <input type="date" id="nascimento" name="nascimento" readonly value="{{ pessoa.nascimento if pessoa else '' }}">
+
         <label for="contratacao">Data de contratação:</label>
-        <input type="date" id="contratacao" name="contratacao" placeholder="Digite a data de contratação">
+        <input type="date" id="contratacao" name="contratacao" readonly value="{{ pessoa.contratacao if pessoa else '' }}">
 
-        <label for="Status">Status</label>
-            <select id="status" name="status">
-                <option value="">Selecione o Status</option>
-                <option value="Ativo">Ativo</option>
-                <option value="Inativo">Inativo</option>
-                <option value="Desligado">Desligado</option>
-            </select>
-        
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" value="{{ pessoa.status if pessoa else '' }}" placeholder="Status do funcionário" readonly>
 
-        <button id="cadastrarFuncinario" type="submit">Cadastrar</button>
-        
-        <div class="photo-section">
-          <div class="photo-container">
-            <label for="photo1">Foto do funcionário:</label>
-            <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')">
-            <img id="imgFoto" src="" alt="Pré-visualização da Foto 1">
-          </div>
-          
-          <div class="photo-container">
-            <label for="photo2">Assinatura do funcionário:</label>
-            <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')">
-            <img id="imgAssinatura" src="" alt="Pré-visualização da Foto 2">
-          </div>
+        <button id="selectFuncionario" type="submit">Selecionar funcionário</button>
+      </div>
+
+      <div class="photo-section">
+        <div class="photo-container">
+          <label for="foto">Foto do funcionário:</label>
+          <img id="imgFoto" src="" alt="Pré-visualização da Foto" src="{{ pessoa.foto if pessoa else '' }}">
         </div>
-      </form>
-    </div>
-    <br>
+
+        <div class="photo-container">
+          <label for="assinatura">Assinatura do funcionário:</label>
+          <img id="imgAssinatura" src="" alt="Pré-visualização da Assinatura" src="{{ pessoa.assinatura if pessoa else '' }}">
+        </div>
+      </div>
+    </form>
     <br>
     {{ validacao() }}
   </div>
 
-  <footer>Pode colocar o que vc quiser aqui</footer>
+  <footer>Pode colocar o que você quiser aqui</footer>
 
-<script src="../static/scripts/scripts.js"></script>
-
+  <script src="../static/scripts/scripts.js"></script>
 </body>
 </html>
