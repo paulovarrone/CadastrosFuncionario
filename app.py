@@ -163,6 +163,77 @@ def select_dados_cadastrais():
 
 @app.route('/carteiradigital', methods=['GET', 'POST'])
 def selecionar_e_cadastrar():
+    def select():
+        pessoa = None
+
+        if request.method == 'POST':
+            matricula = request.form['matricula']
+
+            try:
+                conexao = connection()
+                cursor = conexao.cursor(dictionary=True)
+
+                cursor.execute('SELECT * FROM funcionario WHERE matricula = %s', (matricula,))
+                pessoa = cursor.fetchone()
+
+                if not pessoa:
+                    flash('Usuário não encontrado no sistema.', 'erro')
+            except Exception as e:
+                flash(f'Erro ao buscar funcionário: {e}', 'erro')
+            finally:
+                cursor.close()
+                conexao.close()
+
+        return render_template('carteira.html', pessoa=pessoa)
+
+    def cadastro_apos_selecao():
+        if request.method == 'POST':
+            matricula = request.form['matricula']
+            foto = request.files.get('foto')
+            assinatura = request.files.get('assinatura')
+
+            if not (foto and assinatura):
+                flash('Foto e assinatura são obrigatórios.', 'erro')
+                return redirect(url_for('selecionar_e_cadastrar'))
+
+            foto_b64 = imagem_para_base64(foto)
+            assinatura_b64 = imagem_para_base64(assinatura)
+
+            try:
+                conexao = connection()
+                cursor = conexao.cursor(dictionary=True)
+
+                # Verifica se o funcionário já existe
+                cursor.execute("SELECT * FROM funcionario WHERE matricula = %s", (matricula,))
+                pessoa = cursor.fetchone()
+
+                if pessoa:
+                    # Atualiza as fotos e assinatura
+                    query = ("UPDATE funcionario SET foto = %s, assinatura = %s WHERE matricula = %s")
+                    valores = (foto_b64, assinatura_b64, matricula)
+
+                    cursor.execute(query, valores)
+                    conexao.commit()
+                    flash('Fotos atualizadas com sucesso.', 'sucesso')
+                else:
+                    flash('Usuário não encontrado para atualizar as fotos.', 'erro')
+
+            except Exception as e:
+                flash(f"Erro ao atualizar fotos: {e}", 'erro')
+
+            finally:
+                cursor.close()
+                conexao.close()
+
+            return redirect(url_for('selecionar_e_cadastrar'))
+
+        return render_template('carteira.html')
+
+    if 'selectFuncionario' in request.form:
+        return select()
+    elif 'cadastrarCarteirinha' in request.form:
+        return cadastro_apos_selecao()
+
     return render_template('carteira.html')
 
 if __name__ == '__main__':
