@@ -117,13 +117,43 @@ def cadastro_funcinario():
 
 
     
-@app.route('/alterar', methods=['GET', 'POST'])
-def alterar_dados_cadastrais():
-    return render_template('alter.html')
+# @app.route('/alterar', methods=['GET', 'POST'])
+# def alterar_dados_cadastrais():
+#     return render_template('alter.html')
 
 @app.route('/selecionar', methods=['GET', 'POST'])
 def select_dados_cadastrais():
-    return render_template('select.html')
+
+    pessoa = None
+
+    if request.method == 'POST':
+        matricula = request.form['matricula']
+
+        try:
+            conexao = connection()
+            cursor = conexao.cursor(dictionary=True)
+
+            cursor.execute('SELECT * FROM funcionario WHERE matricula = %s' ,(matricula,))
+
+            pessoa = cursor.fetchone()
+
+            if not pessoa:
+                flash('Usuário não encontrado no sistema.', 'erro')
+            
+            
+
+
+        except Exception as e:
+                flash(f"Erro {e}", 'erro')
+
+        finally:
+            cursor.close()
+            conexao.close()
+
+        return redirect(url_for('select_dados_cadastrais'))
+
+
+    return render_template('select.html', pessoa=pessoa)
 
 
 if __name__ == '__main__':
