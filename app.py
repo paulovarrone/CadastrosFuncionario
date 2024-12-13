@@ -73,7 +73,7 @@ def cadastro_funcinario():
 
     if request.method == 'POST':
         nome = request.form['nome']
-        matricula = request.form['matricula']
+        matricula = request.form['matricula'].strip()
         nascimento = request.form['nascimento']
         contratacao = request.form['contratacao']
         status = request.form['status']
@@ -127,7 +127,7 @@ def select_dados_cadastrais():
     pessoa = None
 
     if request.method == 'POST':
-        matricula = request.form['matricula']
+        matricula = request.form['matricula'].strip()
 
         try:
             conexao = connection()
@@ -167,7 +167,7 @@ def selecionar_e_cadastrar():
         pessoa = None
 
         if request.method == 'POST':
-            matricula = request.form['matricula']
+            matricula = request.form['matricula'].strip()
 
             try:
                 conexao = connection()
@@ -188,7 +188,7 @@ def selecionar_e_cadastrar():
 
     def cadastro_apos_selecao():
         if request.method == 'POST':
-            matricula = request.form['matricula']
+            matricula = request.form['matricula'].strip()
             foto = request.files.get('foto')
             assinatura = request.files.get('assinatura')
 
@@ -208,6 +208,7 @@ def selecionar_e_cadastrar():
                 pessoa = cursor.fetchone()
 
                 if pessoa:
+                    print(f"Funcionário encontrado: {pessoa}")
                     # Atualiza as fotos e assinatura
                     query = ("UPDATE funcionario SET foto = %s, assinatura = %s WHERE matricula = %s")
                     valores = (foto_b64, assinatura_b64, matricula)
@@ -217,6 +218,9 @@ def selecionar_e_cadastrar():
                     flash('Assinatura e Foto atualizada com sucesso.', 'sucesso')
                 else:
                     flash('Usuário não encontrado para atualizar as fotos.', 'erro')
+
+            except mysql.connector.Error as e:
+                flash(f"Erro no MySQL: {e.msg}", 'erro')
 
             except Exception as e:
                 flash(f"Erro ao atualizar fotos: {e}", 'erro')

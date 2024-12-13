@@ -16,6 +16,10 @@
   </div>
   <h2>CADASTRO DE CARTEIRA DIGITAL</h2>
   <div class="container">
+
+    <br>
+    {{ validacao() }}
+
     <form class="form-container" method="POST" action="/carteiradigital" enctype="multipart/form-data">
       <div class="form">
         <label for="name">Nome:</label>
@@ -42,20 +46,19 @@
         <div class="photo-container">
           <label for="foto">Foto do funcionário:</label>
           <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')" required>
-          <img id="imgFoto" src="" alt="Pré-visualização da Foto">
+          <img id="imgFoto" src="" alt="Foto não disponível">
         </div>
 
         <div class="photo-container">
           <label for="assinatura">Assinatura do funcionário:</label>
           <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')" required>
-          <img id="imgAssinatura" src="" alt="Pré-visualização da Assinatura">
+          <img id="imgAssinatura" src="" alt="Assinatura não disponível">
         </div>
       </div>
 
       <button id="cadastrarCarteirinha" type="submit">Cadastrar carteirinha</button>
     </form>
-    <br>
-    {{ validacao() }}
+    
   </div>
 
   <footer>Pode colocar o que você quiser aqui</footer>
