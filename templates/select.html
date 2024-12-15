@@ -40,7 +40,7 @@
 
       <div class="photo-section">
         <div class="photo-container">
-          <label>Foto do Funcionário:</label>
+          <label for="foto"><b>Foto do funcionário:</b></label>
           {% if pessoa and pessoa.foto %}
             <img id="imgFoto" src="{{ pessoa.foto }}" alt="Foto do funcionário" >
           {% else %}
@@ -49,7 +49,7 @@
         </div>
 
         <div class="photo-container">
-          <label>Assinatura do Funcionário:</label>
+          <label for="assinatura"><b>Assinatura do funcionário:</b></label>
           {% if pessoa and pessoa.assinatura %}
             <img id="imgAssinatura" src="{{ pessoa.assinatura }}" alt="Assinatura do funcionário" >
           {% else %}
