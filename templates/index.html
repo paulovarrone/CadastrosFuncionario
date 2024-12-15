@@ -48,13 +48,13 @@
         <div class="photo-container">
           <label for="foto"><b>Foto do funcionário:</b></label>
           <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')" required>
-          <img id="imgFoto" src="" alt="Pré-visualização da Foto">
+          <img id="imgFoto" src="{{ pessoa.foto if pessoa and pessoa.foto else url_for('static', filename='assets/assinatura.png') }}" alt="Foto do funcionário" >
         </div>
 
         <div class="photo-container">
           <label for="assinatura"><b>Assinatura do funcionário:</b></label>
           <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')" required>
-          <img id="imgAssinatura" src="" alt="Pré-visualização da Assinatura">
+          <img id="imgAssinatura" src="{{ pessoa.assinatura if pessoa and pessoa.assinatura else url_for('static', filename='assets/assinatura.png') }}">
         </div>
       </div>
     </form>
