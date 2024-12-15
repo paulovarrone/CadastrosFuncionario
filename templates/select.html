@@ -19,11 +19,12 @@
   <div class="container">
     <form class="form-container" method="POST" action="/selecionar" enctype="multipart/form-data">
       <div class="form">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
 
         <label for="matricula">Matrícula:</label>
         <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula" required value="{{ pessoa.matricula if pessoa else '' }}">
+
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
 
         <label for="nascimento">Data de nascimento:</label>
         <input type="date" id="nascimento" name="nascimento" readonly value="{{ pessoa.nascimento if pessoa else '' }}">

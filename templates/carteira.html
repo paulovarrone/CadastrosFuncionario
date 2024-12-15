@@ -37,7 +37,7 @@
           <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
   
           <label for="matricula">Matrícula:</label>
-          <input type="text" id="matricula" name="matricula" readonly required value="{{ pessoa.matricula if pessoa else '' }}">
+          <input type="text" id="matricula" name="matricula" placeholder="Matrícula do funcionário" readonly required value="{{ pessoa.matricula if pessoa else '' }}">
   
           <label for="nascimento">Data de nascimento:</label>
           <input type="date" id="nascimento" name="nascimento" readonly value="{{ pessoa.nascimento if pessoa else '' }}">
@@ -46,7 +46,12 @@
           <input type="date" id="contratacao" name="contratacao" readonly value="{{ pessoa.contratacao if pessoa else '' }}">
   
           <label for="status">Status:</label>
-          <input type="text" id="status" name="status" value="{{ pessoa.status if pessoa else '' }}" placeholder="Status do funcionário" readonly>
+          <select id="status" name="status" required>
+            <option value="">Selecione o Status</option>
+            <option value="Ativo">Ativo</option>
+            <option value="Inativo">Inativo</option>
+            <option value="Desligado">Desligado</option>
+          </select>
         
           <button id="cadastrarCarteirinha" type="submit">Cadastrar carteirinha</button>
         </div>
