@@ -5,66 +5,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro funcionário</title>
+  <title>Selecionar Funcionário</title>
   <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-
   <div class="menu">
-    <a href="/"><button >Adicionar funcionário</button></a>
-    <a href="./alterar"><button >Alterar dados do funcionário</button></a>
-    <a href="./selecionar"><button >Selecionar funcionário</button></a>
+    <a href="/"><button>Adicionar funcionário</button></a>
+    <!-- <a href="./alterar"><button>Alterar dados do funcionário</button></a> -->
+    <a href="./selecionar"><button>Selecionar funcionário</button></a> 
+    <a href="./carteiradigital"><button>Cadastrar carteira digital</button></a> 
   </div>
-
+  <h2>SELEÇÃO DE FUNCIONÁRIO</h2>
   <div class="container">
-    <div class="form-container">
-      <form class="form" method="POST" action="/cadastro" enctype="multipart/form-data">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="nome" placeholder="Digite o nome">
+    <form class="form-container" method="POST" action="/selecionar" enctype="multipart/form-data">
+      <div class="form">
 
         <label for="matricula">Matrícula:</label>
-        <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula">
+        <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula" required value="{{ pessoa.matricula if pessoa else '' }}">
+
+        <button id="selectFuncionario" type="submit">Selecionar funcionário</button>
+
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
 
         <label for="nascimento">Data de nascimento:</label>
-        <input type="date" id="nascimento" name="nascimento" placeholder="Digite a data de nascimento">
-        
+        <input type="date" id="nascimento" name="nascimento" readonly value="{{ pessoa.nascimento if pessoa else '' }}">
+
         <label for="contratacao">Data de contratação:</label>
-        <input type="date" id="contratacao" name="contratacao" placeholder="Digite a data de contratação">
+        <input type="date" id="contratacao" name="contratacao" readonly value="{{ pessoa.contratacao if pessoa else '' }}">
 
-        <label for="Status">Status</label>
-            <select id="status" name="status">
-                <option value="">Selecione o Status</option>
-                <option value="Ativo">Ativo</option>
-                <option value="Inativo">Inativo</option>
-                <option value="Desligado">Desligado</option>
-            </select>
-        
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" value="{{ pessoa.status if pessoa else '' }}" placeholder="Status do funcionário" readonly>
 
-        <button id="cadastrarFuncinario" type="submit">Cadastrar</button>
         
-        <div class="photo-section">
-          <div class="photo-container">
-            <label for="photo1">Foto do funcionário:</label>
-            <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')">
-            <img id="imgFoto" src="" alt="Pré-visualização da Foto 1">
-          </div>
-          
-          <div class="photo-container">
-            <label for="photo2">Assinatura do funcionário:</label>
-            <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')">
-            <img id="imgAssinatura" src="" alt="Pré-visualização da Foto 2">
-          </div>
+      </div>
+
+      <div class="photo-section">
+        <div class="photo-container">
+          <label>Foto do Funcionário:</label>
+          {% if pessoa and pessoa.foto %}
+            <img id="imgFoto" src="{{ pessoa.foto }}" alt="Foto do funcionário" >
+          {% else %}
+            <img id="imgFoto" src="" alt="Foto não disponível" >
+          {% endif %}
         </div>
-      </form>
-    </div>
-    <br>
+
+        <div class="photo-container">
+          <label>Assinatura do Funcionário:</label>
+          {% if pessoa and pessoa.assinatura %}
+            <img id="imgAssinatura" src="{{ pessoa.assinatura }}" alt="Assinatura do funcionário" >
+          {% else %}
+            <img id="imgAssinatura" src="" alt="Assinatura não disponível" >
+          {% endif %}
+        </div>
+      </div>
+    </form>
     <br>
     {{ validacao() }}
   </div>
 
-  <footer>Pode colocar o que vc quiser aqui</footer>
+  <footer>Pode colocar o que você quiser aqui</footer>
 
-<script src="../static/scripts/scripts.js"></script>
-
+  <script src="../static/scripts/scripts.js"></script>
 </body>
 </html>

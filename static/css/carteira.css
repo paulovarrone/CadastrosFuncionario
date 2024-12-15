@@ -70,16 +70,20 @@ body {
 .photo-section {
   display: flex;
   flex-direction: column;
-  gap: 50px;
-  align-items: center;
+  gap: 40px;
   width: 50%;
+  align-items: center;
 }
 
 .photo-container {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
   align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.photo-container input {
+  width: auto;
 }
 
 #imgFoto, #imgAssinatura {
@@ -117,10 +121,6 @@ footer {
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
-}
-
-#bnts {
-  display: flex;
 }
 
 .sucesso {
