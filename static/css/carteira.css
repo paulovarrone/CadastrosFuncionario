@@ -4,13 +4,21 @@
     box-sizing: border-box;
   }
 
-body {
+  body {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 122vh;
+    background-color: #f9f9f9;
 
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #333;
   }
 
   .menu {
@@ -18,22 +26,25 @@ body {
     gap: 20px;
     margin-bottom: 20px;
     padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    width: 100%;
-    box-sizing: border-box;
+      /* border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      width: 100%;
+      box-sizing: border-box; */
     justify-content: center;
   }
 
   .menu button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
   }
 
   .container {
-    border: 2px solid #ccc;
     padding: 20px;
     border-radius: 10px;
     width: 800px;
@@ -41,6 +52,8 @@ body {
     flex-direction: column;
     gap: 20px;
     margin-top: 30px;
+    box-shadow:  0 0 15px rgba(0, 0, 0, 0.1);
+    background: #fff;
   }
 
   .form-container {
@@ -53,7 +66,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 50%;
+    width: 100%;
   }
 
   .form label {
@@ -64,7 +77,9 @@ body {
     padding: 8px;
     font-size: 14px;
     width: 100%;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
+    border-radius: 5px;
+    border: 1px solid #698a97
   }
 
   .photo-section {
@@ -99,6 +114,7 @@ body {
   #imgAssinatura {
     width: 300px;
     height: 100px;
+    
   }
 
   footer {
@@ -111,16 +127,16 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
-    box-sizing: border-box;
   }
 
   #cadastrarFuncionario, #selectFuncionario, #cadastrarCarteirinha {
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
-    border: 1px solid black;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
   }
 
   .sucesso {
