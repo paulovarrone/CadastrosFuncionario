@@ -15,7 +15,17 @@
     <a href="./selecionar"><button>Selecionar funcionário</button></a> 
     <a href="./carteiradigital"><button>Cadastrar carteira digital</button></a> 
   </div>
-  <h2>SELEÇÃO DE FUNCIONÁRIO</h2>
+
+  <div class="titulo">
+    <h2>SELEÇÃO DE FUNCIONÁRIO</h2> 
+    <div class="interrogacao">?</div> 
+    <div class="info-box" id="infoBox">
+      <p>Digite a matrícula do funcionário.</p><br>
+      <p>Seus dados aparecerão nos campos abaixo junto com sua foto e assinatura.</p><br>
+      <button id="closeButton">Fechar</button>
+    </div>
+  </div>
+
   <div class="container">
     <form class="form-container" method="POST" action="/selecionar" enctype="multipart/form-data">
       <div class="form">

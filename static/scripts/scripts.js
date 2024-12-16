@@ -12,3 +12,15 @@ function previewImage(event, previewId) {
       preview.src = "";
     }
   }
+
+  const interrogacao = document.querySelector('.interrogacao');
+  const infoBox = document.getElementById('infoBox');
+  const closeButton = document.getElementById('closeButton');
+
+  interrogacao.addEventListener('click', () => {
+      infoBox.style.display = 'block';
+  });
+
+  closeButton.addEventListener('click', () => {
+      infoBox.style.display = 'none';
+  });
