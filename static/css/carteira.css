@@ -102,7 +102,7 @@
   }
 
   #imgFoto, #imgAssinatura {
-    border: 1px solid #ccc;
+    border: 1px solid #ff0000;
     object-fit: cover;
   }
 
@@ -150,3 +150,9 @@
     font-weight: bold;
     font-size: 20px;
   }
+
+  #status {
+    border: 1px solid red;
+  }
+
+  
