@@ -5,13 +5,16 @@ from dotenv import load_dotenv
 import os
 from datetime import time, timedelta, datetime
 import base64
-
+from functools import wraps
+from flask_bcrypt import Bcrypt
 
 load_dotenv()
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+bcrypt = Bcrypt(app)
 
 def connection():
     conexao = mysql.connector.connect(
@@ -54,8 +57,118 @@ def criar_funcionario():
     cursor.close()
     conexao.close()
 
+def criar_usuario():
+    conexao = connection()
+    cursor = conexao.cursor()
+
+    cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS usuario (
+            id INT AUTO_INCREMENT UNIQUE,
+            username VARCHAR(7) NOT NULL PRIMARY KEY,
+            password VARCHAR(250) NOT NULL
+        )
+    ''')
+
+    conexao.commit()
+    cursor.close()
+    conexao.close()
+
+def cadastrar_usuario(username, password):
+    conexao = connection()
+    cursor = conexao.cursor()
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    print(f"Hash gerado para {username}: {hashed_password}")  # Log para verificar o hash
+
+    try:
+        cursor.execute("INSERT INTO usuario (username, password) VALUES (%s, %s)", (username, hashed_password))
+        conexao.commit()
+    except IntegrityError:
+        flash('Usuário já existe!', 'erro')
+    finally:
+        cursor.close()
+        conexao.close()
+
+
+def autenticar_usuario(username, password):
+    conexao = connection()
+    cursor = conexao.cursor(dictionary=True)
+
+    try:
+        cursor.execute("SELECT * FROM usuario WHERE username = %s", (username,))
+        user = cursor.fetchone()
+
+        if user:
+            app.logger.info(f"Hash armazenado para {username}: {user['password']}")
+            if bcrypt.check_password_hash(user['password'], password):
+                return user
+            else:
+                app.logger.error("Senha incorreta!")
+        else:
+            app.logger.error("Usuário não encontrado!")
+    finally:
+        cursor.close()
+        conexao.close()
+
+    return None
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        if password != confirm_password:
+            flash('As senhas não coincidem!', 'erro')
+        else:
+            cadastrar_usuario(username, password)
+            flash('Usuário cadastrado com sucesso.', 'sucesso')
+            return redirect(url_for('login'))
+
+    return render_template('register.html')
+
+
+# Rotas
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user = autenticar_usuario(username, password)
+        if user:
+            session['user'] = user['username']  # Salva o usuário na sessão
+            flash('Login realizado com sucesso.', 'sucesso')
+            return redirect(url_for('index'))
+        else:
+            flash('Credenciais inválidas. Tente novamente.', 'erro')
+
+    return render_template('login.html')
+
+
+
+# Decorador para exigir login
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user' not in session:
+            flash('Você precisa estar logado para acessar essa página.', 'erro')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    flash('Você saiu do sistema.', 'sucesso')
+    return redirect(url_for('login'))
+
+
 
 @app.route('/')
+@login_required
 def index():
     return render_template('index.html')
 
@@ -69,6 +182,7 @@ def imagem_para_base64(imagem):
 
 
 @app.route('/cadastro', methods=['GET', 'POST'])
+@login_required
 def cadastro_funcinario():
 
     if request.method == 'POST':
@@ -122,6 +236,7 @@ def cadastro_funcinario():
 #     return render_template('alter.html')
 
 @app.route('/selecionar', methods=['GET', 'POST'])
+@login_required
 def select_dados_cadastrais():
     pessoa = None
 
@@ -178,6 +293,7 @@ def select_dados_cadastrais():
 
 
 @app.route('/carteiradigital', methods=['GET', 'POST'])
+@login_required
 def selecionar_e_cadastrar():
     pessoa = None
     if request.method == 'POST':
@@ -237,4 +353,5 @@ def selecionar_e_cadastrar():
 if __name__ == '__main__':
     criar_banco()
     criar_funcionario()
+    criar_usuario()
     app.run(host='0.0.0.0', port=5003, debug=True)
