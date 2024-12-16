@@ -48,7 +48,7 @@
         <div class="photo-container">
           <label for="foto"><b>Foto do funcionário:</b></label>
           <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')" required>
-          <img id="imgFoto" src="{{ pessoa.foto if pessoa and pessoa.foto else url_for('static', filename='assets/assinatura.png') }}" alt="Foto do funcionário" >
+          <img id="imgFoto" src="{{ pessoa.foto if pessoa and pessoa.foto else url_for('static', filename='assets/foto.png') }}" alt="Foto do funcionário" >
         </div>
 
         <div class="photo-container">
