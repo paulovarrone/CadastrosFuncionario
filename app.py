@@ -64,7 +64,7 @@ def criar_usuario():
     cursor.execute(''' 
         CREATE TABLE IF NOT EXISTS usuario (
             id INT AUTO_INCREMENT UNIQUE,
-            username VARCHAR(7) NOT NULL PRIMARY KEY,
+            username VARCHAR(50) NOT NULL PRIMARY KEY,
             password VARCHAR(250) NOT NULL
         )
     ''')
