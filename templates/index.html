@@ -14,7 +14,7 @@
     <!-- <a href="./alterar"><button>Alterar dados do funcionário</button></a> -->
     <a href="./selecionar"><button>Selecionar funcionário</button></a> 
     <a href="./carteiradigital"><button>Cadastrar carteira digital</button></a>
-    <a href="{{ url_for('logout') }}" class="btn btn-danger">Sair</a>
+
   </div>
 
   <div class="titulo">
@@ -72,7 +72,7 @@
     {{ validacao() }}
   </div>
 
-  <footer>Pode colocar o que você quiser aqui</footer>
+  <footer>Pode colocar o que você quiser aqui <a href="{{ url_for('logout') }}" class="sair">Sair</a></footer>
 
   <script src="../static/scripts/scripts.js"></script>
 </body>

@@ -73,3 +73,25 @@ button:hover {
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
+
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    padding: 10px;
+    border-top: 2px solid #ccc;
+    background-color: #f9f9f9;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* text-align: center;
+    font-size: 14px;
+    color: #777;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px; */
+  }
