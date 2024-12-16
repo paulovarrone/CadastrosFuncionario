@@ -100,5 +100,6 @@ footer {
     display: flex;
     gap: 20px;
     justify-content: center;
+    flex-direction: column;
   }
 
