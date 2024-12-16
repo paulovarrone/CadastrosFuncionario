@@ -30,9 +30,15 @@
                 <input type="password" id="password" name="password" class="form-control" placeholder="Digite sua senha" required>
             </div>
             <button type="submit" class="btn btn-primary">Entrar</button>
+            <br><br>
+            
         </form>
+        <div class="cadastrarOuTrocarSenha">
+            <a href="/register"><button type="submit" class="cadastrar-usuario">Cadastrar usuário</button></a>
+            <a><button type="submit" class="cadastrar-usuario">Esqueci minha senha</button></a>
+        </div>
     </div>
 
-    <footer>Pode colocar o que você quiser aqui <a href="{{ url_for('logout') }}" class="sair">Sair</a></footer>
+    <footer>Pode colocar o que você quiser aqui</footer>
 </body>
 </html>

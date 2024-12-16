@@ -86,7 +86,7 @@ footer {
     bottom: 0;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     /* text-align: center;
     font-size: 14px;
@@ -96,9 +96,12 @@ footer {
     padding-top: 10px; */
   }
 
-  .cadastrarOuTrocarSenha{
-    display: flex;
-    gap: 20px;
-    justify-content: center;
+  .sair {
+    padding: 5px 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
   }
-
