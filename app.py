@@ -102,6 +102,7 @@ def criar_usuario():
     cursor.execute(''' 
         CREATE TABLE IF NOT EXISTS usuario (
             id INT AUTO_INCREMENT UNIQUE,
+            email VARCHAR(50) NOT NULL UNIQUE,
             username VARCHAR(50) NOT NULL PRIMARY KEY,
             password VARCHAR(250) NOT NULL
         )
@@ -111,14 +112,14 @@ def criar_usuario():
     cursor.close()
     conexao.close()
 
-def cadastrar_usuario(username, password):
+def cadastrar_usuario(email, username, password):
     conexao = connection()
     cursor = conexao.cursor()
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
     print(f"Hash gerado para {username}: {hashed_password}")  # Log para verificar o hash
 
     try:
-        cursor.execute("INSERT INTO usuario (username, password) VALUES (%s, %s)", (username, hashed_password))
+        cursor.execute("INSERT INTO usuario (email, username, password) VALUES (%s, %s, %s)", (email,username, hashed_password))
         conexao.commit()
         app.logger.info(f"Usuario {username} cadastrado com sucesso.")
     except IntegrityError:
@@ -129,7 +130,7 @@ def cadastrar_usuario(username, password):
         conexao.close()
 
 
-def autenticar_usuario(username, password):
+def autenticar_usuario(email,username, password):
     conexao = connection()
     cursor = conexao.cursor(dictionary=True)
 
@@ -158,6 +159,7 @@ def autenticar_usuario(username, password):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        email = request.form['email']
         username = request.form['username']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
@@ -165,7 +167,7 @@ def register():
         if password != confirm_password:
             flash('As senhas não coincidem!', 'erro')
         else:
-            cadastrar_usuario(username, password)
+            cadastrar_usuario(email,username, password)
             flash('Usuário cadastrado com sucesso.', 'sucesso')
             return redirect(url_for('login'))
 
@@ -176,10 +178,11 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        email = request.form['email']
         username = request.form['username']
         password = request.form['password']
 
-        user = autenticar_usuario(username, password)
+        user = autenticar_usuario(email,username, password)
         if user:
             session['user'] = user['username']  # Salva o usuário na sessão
             app.logger.info(f"Usuario {username} logado com sucesso.")
