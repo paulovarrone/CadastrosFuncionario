@@ -155,7 +155,7 @@ def autenticar_usuario(email,username, password):
     cursor = conexao.cursor(dictionary=True)
 
     try:
-        cursor.execute("SELECT * FROM usuario WHERE username = %s", (username,))
+        cursor.execute("SELECT * FROM usuario WHERE username = %s and email = %s", (username,email))
         user = cursor.fetchone()
 
         if user:
