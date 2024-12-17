@@ -259,7 +259,7 @@ def cadastro_funcinario():
 
                 cursor.execute(query, valores)
                 conexao.commit()
-                app.logger.info(f"Usuario {session['user']} cadastrou o funcionario {nome} (matricula {matricula}).")
+                app.logger.info(f"Usuario {session['user']} cadastrou o funcionario {nome} matricula {matricula}.")
                 flash('Cadastro realizado com sucesso.', 'sucesso')
             else:
                 if pessoa[0]['matricula'] == matricula:
@@ -292,14 +292,14 @@ def select_dados_cadastrais():
 
     if request.method == 'POST':
         matricula = request.form['matricula'].strip()
-        nome = request.form['nome']
+        
         try:
             conexao = connection()
             cursor = conexao.cursor(dictionary=True)
 
             cursor.execute('SELECT * FROM funcionario WHERE matricula = %s', (matricula,))
             pessoa = cursor.fetchone()
-
+            nome = request.form['nome']
             if not pessoa:
                 flash('Usuário não encontrado no sistema.', 'erro')
             else:
@@ -348,7 +348,7 @@ def selecionar_e_cadastrar():
     pessoa = None
     if request.method == 'POST':
         matricula = request.form.get('matricula', '').strip()
-        nome = request.form['nome']
+        
         # Processo de seleção do funcionário
         if 'foto' not in request.files:
             try:
@@ -361,7 +361,7 @@ def selecionar_e_cadastrar():
                     app.logger.warning(f"Funcionario com matricula {matricula} nao encontrado para atualizaçao.")
                     flash('Usuário não encontrado no sistema.', 'erro')
                 else:
-                    app.logger.info(f"Usuario {session['user']} acessou os dados do funcionario {nome} matricula {matricula}.")
+                    app.logger.info(f"Usuario {session['user']} acessou os dados do funcionario {pessoa['nome']} com matricula {matricula}.")
             except Exception as e:
                 app.logger.error(f'Erro ao buscar funcionario {matricula} para atualizaçao: {e}')
                 flash(f'Erro ao buscar funcionário: {e}', 'erro')
@@ -392,7 +392,7 @@ def selecionar_e_cadastrar():
                     query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s WHERE matricula = %s"
                     cursor.execute(query, (foto_b64, assinatura_b64,status, matricula))
                     conexao.commit()
-                    app.logger.info(f"Usuario {session['user']} atualizou foto e assinatura de {nome} com matricula {matricula} atualizadas com sucesso. Status {status}")
+                    app.logger.info(f"Usuario {session['user']} atualizou foto e assinatura de {nome} com matricula {matricula} atualizadas com sucesso, status {status}")
                     flash('Foto e assinatura atualizadas com sucesso.', 'sucesso')
                     return redirect(url_for('selecionar_e_cadastrar'))
                 else:
