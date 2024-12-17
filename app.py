@@ -207,7 +207,8 @@ def login():
         user = autenticar_usuario(email,username, password)
         if user:
             session['user'] = user['username']  # Salva o usuário na sessão
-            app.logger.info(f"Usuario {username} logado com sucesso.")
+            session['email']= user['email']
+            app.logger.info(f"Usuario {username} {email} logado com sucesso.")
             flash('Login realizado com sucesso.', 'sucesso')
             return redirect(url_for('index'))
         else:
@@ -232,8 +233,10 @@ def login_required(f):
 @app.route('/logout')
 def logout():
     username = session.get('user', None)
+    email = session.get('email', None)
     session.pop('user', None)
-    app.logger.info(f"Usuario {username} saiu do sistema.")
+    session.pop('email', None)
+    app.logger.info(f"Usuario {username} {email} saiu do sistema.")
     flash('Você saiu do sistema.', 'sucesso')
     return redirect(url_for('login'))
 
@@ -284,7 +287,7 @@ def cadastro_funcinario():
 
                 cursor.execute(query, valores)
                 conexao.commit()
-                app.logger.info(f"Usuario {session['user']} cadastrou o funcionario {nome} matricula {matricula}.")
+                app.logger.info(f"Usuario {session['user']} E-mail {session['email']} cadastrou o funcionario {nome} matricula {matricula}.")
                 flash('Cadastro realizado com sucesso.', 'sucesso')
             else:
                 if pessoa[0]['matricula'] == matricula:
@@ -330,7 +333,7 @@ def select_dados_cadastrais():
             else:
                 # Salva a matrícula na sessão
                 session['matricula'] = matricula
-                app.logger.info(f"Usuario {session['user']} selecionou dados do funcionario {pessoa['nome']} com matricula {matricula}")
+                app.logger.info(f"Usuario {session['user']} E-mail {session['email']} selecionou dados do funcionario {pessoa['nome']} com matricula {matricula}")
         except Exception as e:
             flash(f"Erro {e}", 'erro')
 
@@ -386,7 +389,7 @@ def selecionar_e_cadastrar():
                     app.logger.warning(f"Funcionario com matricula {matricula} nao encontrado para atualizaçao.")
                     flash('Usuário não encontrado no sistema.', 'erro')
                 else:
-                    app.logger.info(f"Usuario {session['user']} acessou os dados do funcionario {pessoa['nome']} com matricula {matricula}.")
+                    app.logger.info(f"Usuario {session['user']} E-mail {session['email']} acessou os dados do funcionario {pessoa['nome']} com matricula {matricula}.")
             except Exception as e:
                 app.logger.error(f'Erro ao buscar funcionario {matricula} para atualizaçao: {e}')
                 flash(f'Erro ao buscar funcionário: {e}', 'erro')
@@ -417,7 +420,7 @@ def selecionar_e_cadastrar():
                     query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s WHERE matricula = %s"
                     cursor.execute(query, (foto_b64, assinatura_b64,status, matricula))
                     conexao.commit()
-                    app.logger.info(f"Usuario {session['user']} atualizou os dados de {nome} com matricula {matricula} status {status}")
+                    app.logger.info(f"Usuario {session['user']} E-mail {session['email']} atualizou os dados de {nome} com matricula {matricula} status {status}")
                     flash('Dados atualizadas com sucesso.', 'sucesso')
                     return redirect(url_for('selecionar_e_cadastrar'))
                 else:
