@@ -330,7 +330,7 @@ def select_dados_cadastrais():
             else:
                 # Salva a matrícula na sessão
                 session['matricula'] = matricula
-                app.logger.info(f"Usuario {session['user']} selecionou o funcionario {pessoa['nome']} com matricula {matricula}")
+                app.logger.info(f"Usuario {session['user']} selecionou dados do funcionario {pessoa['nome']} com matricula {matricula}")
         except Exception as e:
             flash(f"Erro {e}", 'erro')
 
