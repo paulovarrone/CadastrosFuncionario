@@ -1,7 +1,11 @@
  <footer>
     Pode colocar o que você quiser aqui
     <div class="user">
-      <p><b>Usuário:</b> {{session['user']}} <b>E-mail:</b> {{session['email']}}</p>
+      <p>
+        <b>Usuário:</b> {{session['user']}} 
+        <br>
+        <b>E-mail:</b> {{session['email']}}
+      </p>
       <a href="{{ url_for('logout') }}" class="sair">Sair</a>
     </div>
     
