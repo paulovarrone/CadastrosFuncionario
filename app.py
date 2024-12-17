@@ -303,13 +303,13 @@ def select_dados_cadastrais():
 
             cursor.execute('SELECT * FROM funcionario WHERE matricula = %s', (matricula,))
             pessoa = cursor.fetchone()
-            nome = request.form['nome']
+
             if not pessoa:
                 flash('Usuário não encontrado no sistema.', 'erro')
             else:
                 # Salva a matrícula na sessão
                 session['matricula'] = matricula
-                app.logger.info(f"Usuario {session['user']} selecionou o funcionario {nome} com matricula {matricula}")
+                app.logger.info(f"Usuario {session['user']} selecionou o funcionario {pessoa['nome']} com matricula {matricula}")
         except Exception as e:
             flash(f"Erro {e}", 'erro')
 
@@ -396,12 +396,12 @@ def selecionar_e_cadastrar():
                     query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s WHERE matricula = %s"
                     cursor.execute(query, (foto_b64, assinatura_b64,status, matricula))
                     conexao.commit()
-                    app.logger.info(f"Usuario {session['user']} atualizou foto e assinatura de {nome} com matricula {matricula} atualizadas com sucesso, status {status}")
-                    flash('Foto e assinatura atualizadas com sucesso.', 'sucesso')
+                    app.logger.info(f"Usuario {session['user']} atualizou os dados de {nome} com matricula {matricula} status {status}")
+                    flash('Dados atualizadas com sucesso.', 'sucesso')
                     return redirect(url_for('selecionar_e_cadastrar'))
                 else:
                     app.logger.warning(f"Funcionario com matricula {matricula} nao encontrado para atualizacao.")
-                    flash('Usuário não encontrado para atualizar fotos.', 'erro')
+                    flash('Usuário não encontrado para atualizar dados.', 'erro')
             except Exception as e:
                 app.logger.error(f'Erro ao atualizar dados do funcionario {matricula}: {e}')
                 flash(f'Erro ao atualizar dados: {e}', 'erro')
