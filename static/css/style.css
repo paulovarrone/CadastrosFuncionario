@@ -205,6 +205,12 @@ footer {
   padding-top: 10px; */
 }
 
+.user {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 #cadastrarFuncionario, #selectFuncionario, #cadastrarCarteirinha {
   /* width: 120px;
   height: 40px;

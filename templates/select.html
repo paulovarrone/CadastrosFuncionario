@@ -9,14 +9,7 @@
   <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-  <div class="menu">
-    <a href="/"><button>Adicionar funcionário</button></a>
-    <!-- <a href="./alterar"><button>Alterar dados do funcionário</button></a> -->
-    <a href="./selecionar"><button>Selecionar funcionário</button></a> 
-    <a href="./carteiradigital"><button>Cadastrar carteira digital</button></a> 
-    
-
-  </div>
+  {% include 'includes/menu.jinja2' %}
 
   <div class="titulo">
     <h2>SELEÇÃO DE FUNCIONÁRIO</h2> 
@@ -67,7 +60,7 @@
     {{ validacao() }}
   </div>
 
-  <footer>Pode colocar o que você quiser aqui <a href="{{ url_for('logout') }}" class="sair">Sair</a></footer>
+  {% include 'includes/footer.jinja2' %}
 
   <script src="../static/scripts/scripts.js"></script>
 </body>

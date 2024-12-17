@@ -193,6 +193,12 @@
     align-items: center;
   }
 
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
   .sair {
     padding: 5px 5px;
     background-color: #007bff;
