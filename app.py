@@ -114,18 +114,37 @@ def criar_usuario():
 
 def cadastrar_usuario(email, username, password):
     conexao = connection()
-    cursor = conexao.cursor()
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    print(f"Hash gerado para {username}: {hashed_password}")  # Log para verificar o hash
+    cursor = conexao.cursor(dictionary=True)
 
     try:
-        cursor.execute("INSERT INTO usuario (email, username, password) VALUES (%s, %s, %s)", (email,username, hashed_password))
+        # Verificar se o e-mail ou username já existe
+        cursor.execute("SELECT * FROM usuario WHERE email = %s OR username = %s", (email, username))
+        usuario_existente = cursor.fetchone()
+
+        if usuario_existente:
+            if usuario_existente['email'] == email:
+                flash('E-mail já cadastrado!', 'erro')
+                app.logger.warning(f"Tentativa de cadastro com e-mail existente: {email}")
+            if usuario_existente['username'] == username:
+                flash('Nome de usuário já cadastrado!', 'erro')
+                app.logger.warning(f"Tentativa de cadastro com username existente: {username}")
+            return False  # Retorna falso se o usuário já existir
+
+        # Gerar hash da senha
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        app.logger.info(f"Hash gerado para {username}: {hashed_password}")
+
+        # Inserir novo usuário
+        cursor.execute("INSERT INTO usuario (email, username, password) VALUES (%s, %s, %s)", 
+                       (email, username, hashed_password))
         conexao.commit()
-        app.logger.info(f"Usuario {username} cadastrado com sucesso.")
-        flash('Usuário cadastrado com sucesso', 'sucesso')
-    except IntegrityError:
-        app.logger.warning(f"Tentativa de cadastro de usuario {username} que ja existe.")
-        flash('Usuário já existe!', 'erro')
+        app.logger.info(f"Usuário {username} cadastrado com sucesso.")
+        flash('Usuário cadastrado com sucesso.', 'sucesso')
+        return True  # Retorna verdadeiro se o cadastro foi bem-sucedido
+    except Exception as e:
+        app.logger.error(f"Erro ao cadastrar o usuário: {e}")
+        flash('Erro ao cadastrar o usuário.', 'erro')
+        return False
     finally:
         cursor.close()
         conexao.close()
@@ -168,9 +187,11 @@ def register():
         if password != confirm_password:
             flash('As senhas não coincidem!', 'erro')
         else:
-            cadastrar_usuario(email, username, password)
-            # flash('Usuário cadastrado com sucesso.', 'sucesso')
-            return redirect(url_for('login'))
+            sucesso = cadastrar_usuario(email, username, password)
+            if sucesso:
+                return redirect(url_for('login'))
+            else:
+                return render_template('register.html', email=email, username=username)
 
     return render_template('register.html')
 
