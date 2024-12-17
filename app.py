@@ -122,6 +122,7 @@ def cadastrar_usuario(email, username, password):
         cursor.execute("INSERT INTO usuario (email, username, password) VALUES (%s, %s, %s)", (email,username, hashed_password))
         conexao.commit()
         app.logger.info(f"Usuario {username} cadastrado com sucesso.")
+        flash('Usuário cadastrado com sucesso', 'sucesso')
     except IntegrityError:
         app.logger.warning(f"Tentativa de cadastro de usuario {username} que ja existe.")
         flash('Usuário já existe!', 'erro')
@@ -167,8 +168,8 @@ def register():
         if password != confirm_password:
             flash('As senhas não coincidem!', 'erro')
         else:
-            cadastrar_usuario(email,username, password)
-            flash('Usuário cadastrado com sucesso.', 'sucesso')
+            cadastrar_usuario(email, username, password)
+            # flash('Usuário cadastrado com sucesso.', 'sucesso')
             return redirect(url_for('login'))
 
     return render_template('register.html')
