@@ -1,3 +1,5 @@
+{% from "macros/macros.jinja2" import login %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +12,8 @@
     <div class="container">
         <h1>Login</h1>
         
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="alert {{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
+        {{ login() }}
+
         
         <form method="POST" action="{{ url_for('login') }}">
             <div class="form-group">
