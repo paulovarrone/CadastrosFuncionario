@@ -27,8 +27,8 @@
   .info-box {
     display: none;
     width: 641;
-    height: 220px;
-    background-color: lightgray;
+    height: 200px;
+    background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 25px;
