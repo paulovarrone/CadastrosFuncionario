@@ -7,6 +7,8 @@ from datetime import time, timedelta, datetime
 import base64
 from functools import wraps
 from flask_bcrypt import Bcrypt
+import logging
+from logging.handlers import RotatingFileHandler
 
 load_dotenv()
 
@@ -15,6 +17,42 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 bcrypt = Bcrypt(app)
+
+# logging.basicConfig(filename='infoLogs.log', level=logging.INFO,
+#                     format='%(asctime)s:%(levelname)s:%(message)s')
+
+def setup_logging():
+    # Criar manipulador para INFO
+    info_handler = RotatingFileHandler('infoLogs.log')
+    info_handler.setLevel(logging.INFO)
+    info_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    info_handler.setFormatter(info_formatter)
+
+    # Criar manipulador para WARNING
+    warning_handler = RotatingFileHandler('warningLogs.log')
+    warning_handler.setLevel(logging.WARNING)
+    warning_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    warning_handler.setFormatter(warning_formatter)
+
+    # Criar manipulador para ERROR
+    error_handler = RotatingFileHandler('errorLogs.log')
+    error_handler.setLevel(logging.ERROR)
+    error_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    error_handler.setFormatter(error_formatter)
+
+    # Configurar o logger principal
+    logger = logging.getLogger()
+    logger.addHandler(info_handler)
+    logger.addHandler(warning_handler)
+    logger.addHandler(error_handler)
+
+    # Também pode configurar um manipulador de console, se necessário
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)
+    console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    console_handler.setFormatter(console_formatter)
+    logger.addHandler(console_handler)
+
 
 def connection():
     conexao = mysql.connector.connect(
@@ -82,7 +120,9 @@ def cadastrar_usuario(username, password):
     try:
         cursor.execute("INSERT INTO usuario (username, password) VALUES (%s, %s)", (username, hashed_password))
         conexao.commit()
+        app.logger.info(f"Usuario {username} cadastrado com sucesso.")
     except IntegrityError:
+        app.logger.warning(f"Tentativa de cadastro de usuario {username} que ja existe.")
         flash('Usuário já existe!', 'erro')
     finally:
         cursor.close()
@@ -100,11 +140,14 @@ def autenticar_usuario(username, password):
         if user:
             app.logger.info(f"Hash armazenado para {username}: {user['password']}")
             if bcrypt.check_password_hash(user['password'], password):
+                app.logger.info(f"Usuario {username} autenticado com sucesso.")
                 return user
             else:
+                app.logger.warning(f"Falha de login para o usuario {username}: senha incorreta.")
                 app.logger.error("Senha incorreta!")
         else:
-            app.logger.error("Usuário não encontrado!")
+            app.logger.warning(f"Falha de login para o usuario {username}: usuario nao encontrado.")
+            app.logger.error(f"Usuario {username} nao encontrado!")
     finally:
         cursor.close()
         conexao.close()
@@ -139,9 +182,11 @@ def login():
         user = autenticar_usuario(username, password)
         if user:
             session['user'] = user['username']  # Salva o usuário na sessão
+            app.logger.info(f"Usuario {username} logado com sucesso.")
             flash('Login realizado com sucesso.', 'sucesso')
             return redirect(url_for('index'))
         else:
+            app.logger.warning(f"Tentativa de login falhada para o usuario {username}.")
             flash('Credenciais inválidas. Tente novamente.', 'erro')
 
     return render_template('login.html')
@@ -161,7 +206,9 @@ def login_required(f):
 
 @app.route('/logout')
 def logout():
+    username = session.get('user', None)
     session.pop('user', None)
+    app.logger.info(f"Usuario {username} saiu do sistema.")
     flash('Você saiu do sistema.', 'sucesso')
     return redirect(url_for('login'))
 
@@ -212,12 +259,15 @@ def cadastro_funcinario():
 
                 cursor.execute(query, valores)
                 conexao.commit()
+                app.logger.info(f"Funcionario {nome} com matricula {matricula} cadastrado com sucesso.")
                 flash('Cadastro realizado com sucesso.', 'sucesso')
             else:
                 if pessoa[0]['matricula'] == matricula:
+                    app.logger.warning(f"Tentativa de cadastro com matricula {matricula} que ja existe.")
                     flash('Usuário já cadastrado com essa matricula.', 'erro')
         
         except IntegrityError as err:
+            app.logger.error(f"Erro de integridade ao tentar cadastrar funcionario {matricula}: {err}")
             flash(f"Erro de integridade: {err}", 'erro')
         
         finally:
@@ -308,8 +358,10 @@ def selecionar_e_cadastrar():
                 pessoa = cursor.fetchone()
                 
                 if not pessoa:
+                    app.logger.warning(f"Funcionario com matricula {matricula} nao encontrado para atualizaçao.")
                     flash('Usuário não encontrado no sistema.', 'erro')
             except Exception as e:
+                app.logger.error(f'Erro ao buscar funcionario {matricula} para atualizaçao: {e}')
                 flash(f'Erro ao buscar funcionário: {e}', 'erro')
             finally:
                 cursor.close()
@@ -319,8 +371,10 @@ def selecionar_e_cadastrar():
             foto = request.files.get('foto')
             assinatura = request.files.get('assinatura')
             status = request.form['status']
+            nome = request.form['nome']
 
             if not matricula:
+                app.logger.warning('Matrícula não fornecida para atualização.')
                 flash('Matrícula é obrigatória para atualizar fotos.', 'erro')
                 return redirect(url_for('selecionar_e_cadastrar'))
 
@@ -336,11 +390,14 @@ def selecionar_e_cadastrar():
                     query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s WHERE matricula = %s"
                     cursor.execute(query, (foto_b64, assinatura_b64,status, matricula))
                     conexao.commit()
+                    app.logger.info(f"Foto e assinatura de {nome} com matricula {matricula} atualizadas com sucesso. Status {status}")
                     flash('Foto e assinatura atualizadas com sucesso.', 'sucesso')
                     return redirect(url_for('selecionar_e_cadastrar'))
                 else:
+                    app.logger.warning(f"Funcionario com matricula {matricula} nao encontrado para atualizaçao.")
                     flash('Usuário não encontrado para atualizar fotos.', 'erro')
             except Exception as e:
+                app.logger.error(f'Erro ao atualizar dados do funcionario {matricula}: {e}')
                 flash(f'Erro ao atualizar dados: {e}', 'erro')
             finally:
                 cursor.close()
@@ -354,4 +411,5 @@ if __name__ == '__main__':
     criar_banco()
     criar_funcionario()
     criar_usuario()
+    setup_logging()
     app.run(host='0.0.0.0', port=5003, debug=True)
