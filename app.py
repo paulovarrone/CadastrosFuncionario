@@ -208,7 +208,7 @@ def login():
         if user:
             session['user'] = user['username']  # Salva o usuário na sessão
             session['email']= user['email']
-            app.logger.info(f"Usuario {username} {email} logado com sucesso.")
+            app.logger.info(f"Usuario {username}, E-mail {email} logado com sucesso.")
             flash('Login realizado com sucesso.', 'sucesso')
             return redirect(url_for('index'))
         else:
