@@ -44,3 +44,23 @@ function previewImage(event, previewId) {
       overlay.style.display = 'none';
       infoBox.style.display = 'none';
   });
+
+
+function mascaraCPF(cpf) {
+  let valor = cpf.value;
+  valor = valor.replace(/\D/g, ''); // Remove tudo que não for dígito
+  valor = valor.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca o primeiro ponto
+  valor = valor.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca o segundo ponto
+  valor = valor.replace(/(\d{3})(\d{2})$/, "$1-$2"); // Coloca o hífen
+  cpf.value = valor;
+}
+
+document.querySelector('form').addEventListener('submit', function(event) {
+  const cpf = document.getElementById('cpf');
+  
+  if (cpf.value.length < 14) {
+    alert('O CPF deve ter pelo menos 14 caracteres');
+    event.preventDefault(); // Impede o envio do formulário
+  }
+  
+});
