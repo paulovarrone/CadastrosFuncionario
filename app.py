@@ -244,12 +244,12 @@ def mudanca_senha():
                     valores = (hashed_password, username, email)
                     cursor.execute(query, valores)
 
-                    app.logger.info(f"Usuario {username} {email}, teve sua senha alterado com sucesso.")
+                    app.logger.info(f"Usuario {username}, E-mail {email}, teve sua senha alterado com sucesso.")
                     conexao.commit()
                     flash('Senha alterada com sucesso.', 'sucesso')
                     return redirect(url_for('mudanca_senha'))
             else:
-                app.logger.info(f"Usuario {username} {email}, teve tentativa inválida de troca de senha.")
+                app.logger.info(f"Usuario {username}, E-mail {email}, teve tentativa inválida de troca de senha.")
                 flash('Credenciais inválidas. Tente novamente.', 'erro')
                 return render_template('esqueci_senha.html')
             
