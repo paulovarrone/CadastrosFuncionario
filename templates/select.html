@@ -27,7 +27,7 @@
       <div class="form">
 
         <label for="matricula">Matrícula:</label>
-        <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula" required value="{{ pessoa.matricula if pessoa else '' }}">
+        <input type="number" id="matricula" name="matricula" placeholder="Digite a matrícula" required value="{{ pessoa.matricula if pessoa else '' }}">
 
         <label for="name">Nome:</label>
         <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
