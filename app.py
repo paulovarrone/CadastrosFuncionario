@@ -217,7 +217,52 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/esqueci_senha', methods=['GET','POST'])
+def mudanca_senha():
+    
+    try:
+        conexao = connection()
+        cursor = conexao.cursor(dictionary=True)
+        
+        if request.method == 'POST':
+            email = request.form['email']
+            username = request.form['username']
+            password = request.form['password']
+            confirm_password = request.form['confirm_password']
+            
 
+            cursor.execute("SELECT * FROM usuario WHERE email = %s AND username = %s", (email, username))
+            usuario_existente = cursor.fetchone()
+
+            if usuario_existente:
+                if password != confirm_password:
+                    flash('As senhas não coincidem!', 'erro')
+                else:
+                    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+                    query = "UPDATE usuario SET password = %s WHERE username = %s AND email = %s"
+                    valores = (hashed_password, username, email)
+                    cursor.execute(query, valores)
+
+                    app.logger.info(f"Usuario {username} {email}, teve sua senha alterado com sucesso.")
+                    conexao.commit()
+                    flash('Senha alterada com sucesso.', 'sucesso')
+                    return redirect(url_for('mudanca_senha'))
+            else:
+                app.logger.info(f"Usuario {username} {email}, teve tentativa inválida de troca de senha.")
+                flash('Credenciais inválidas. Tente novamente.', 'erro')
+                return render_template('esqueci_senha.html')
+            
+    except Exception as e: 
+        app.logger.error(f"Erro ao trocar senha: {str(e)}")
+        flash(f'Erro: {str(e)}', 'erro')
+        return render_template('esqueci_senha.html')
+    
+    finally:
+        cursor.close()
+        conexao.close()
+          
+    return render_template('esqueci_senha.html')
 
 # Decorador para exigir login
 def login_required(f):

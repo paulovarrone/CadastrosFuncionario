@@ -10,12 +10,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
+        <h1>Esqueci minha senha</h1>
         
         {{ login() }}
 
         
-        <form method="POST" action="{{ url_for('login') }}">
+        <form method="POST" action="{{ url_for('mudanca_senha') }}">
             <div class="form-group">
                 <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail" required>
@@ -25,16 +25,19 @@
                 <input type="text" id="username" name="username" class="form-control" placeholder="Digite seu nome de usuário" maxlength="20" required>
             </div>
             <div class="form-group">
-                <label for="password">Senha</label>
+                <label for="password">Nova senha</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Digite sua senha" maxlength="12" required>
             </div>
-            <button type="submit" class="btn btn-primary">Entrar</button>
+            <div class="form-group">
+                <label for="confirm_password">Confirmar Senha</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirme sua senha" maxlength="12" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Trocar senha</button>
             <br><br>
             
         </form>
         <div class="cadastrarOuTrocarSenha">
-            <a href="/register"><button type="submit" class="cadastrar-usuario">Cadastrar usuário</button></a>
-            <a href="/esqueci_senha"><button type="submit" class="cadastrar-usuario">Esqueci minha senha</button></a>
+            <a href="/login"><button type="submit" class="cadastrar-usuario">Voltar para login</button></a>
         </div>
     </div>
 
