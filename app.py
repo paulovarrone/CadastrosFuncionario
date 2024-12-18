@@ -104,7 +104,8 @@ def criar_usuario():
             id INT AUTO_INCREMENT UNIQUE,
             email VARCHAR(50) NOT NULL UNIQUE,
             username VARCHAR(50) NOT NULL PRIMARY KEY,
-            password VARCHAR(250) NOT NULL
+            password VARCHAR(250) NOT NULL,
+            cpf VARCHAR(14) UNIQUE NOT NULL
         )
     ''')
 
@@ -112,13 +113,13 @@ def criar_usuario():
     cursor.close()
     conexao.close()
 
-def cadastrar_usuario(email, username, password):
+def cadastrar_usuario(email, username, password, cpf):
     conexao = connection()
     cursor = conexao.cursor(dictionary=True)
 
     try:
         # Verificar se o e-mail ou username já existe
-        cursor.execute("SELECT * FROM usuario WHERE email = %s OR username = %s", (email, username))
+        cursor.execute("SELECT * FROM usuario WHERE email = %s OR username = %s OR cpf = %s", (email, username, cpf))
         usuario_existente = cursor.fetchone()
 
         if usuario_existente:
@@ -128,6 +129,9 @@ def cadastrar_usuario(email, username, password):
             if usuario_existente['username'] == username:
                 flash('Nome de usuário já cadastrado!', 'erro')
                 app.logger.warning(f"Tentativa de cadastro com username existente: {username}")
+            if usuario_existente['cpf'] == cpf:
+                flash('CPF de usuário já cadastrado!', 'erro')
+                app.logger.warning(f"Tentativa de cadastro com CPF existente: {cpf}")
             return False  # Retorna falso se o usuário já existir
 
         # Gerar hash da senha
@@ -135,8 +139,8 @@ def cadastrar_usuario(email, username, password):
         app.logger.info(f"Hash gerado para {username}: {hashed_password}")
 
         # Inserir novo usuário
-        cursor.execute("INSERT INTO usuario (email, username, password) VALUES (%s, %s, %s)", 
-                       (email, username, hashed_password))
+        cursor.execute("INSERT INTO usuario (email, username, password, cpf) VALUES (%s, %s, %s, %s)", 
+                       (email, username, hashed_password, cpf))
         conexao.commit()
         app.logger.info(f"Usuário {username} cadastrado com sucesso.")
         flash('Usuário cadastrado com sucesso.', 'sucesso')
@@ -183,11 +187,13 @@ def register():
         username = request.form['username']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
+        cpf = request.form['cpf']
+
 
         if password != confirm_password:
             flash('As senhas não coincidem!', 'erro')
         else:
-            sucesso = cadastrar_usuario(email, username, password)
+            sucesso = cadastrar_usuario(email, username, password, cpf)
             if sucesso:
                 return redirect(url_for('login'))
             else:
@@ -229,9 +235,10 @@ def mudanca_senha():
             username = request.form['username']
             password = request.form['password']
             confirm_password = request.form['confirm_password']
+            cpf = request.form['cpf']
             
 
-            cursor.execute("SELECT * FROM usuario WHERE email = %s AND username = %s", (email, username))
+            cursor.execute("SELECT * FROM usuario WHERE email = %s AND username = %s AND cpf = %s", (email, username, cpf))
             usuario_existente = cursor.fetchone()
 
             if usuario_existente:
@@ -240,8 +247,8 @@ def mudanca_senha():
                 else:
                     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-                    query = "UPDATE usuario SET password = %s WHERE username = %s AND email = %s"
-                    valores = (hashed_password, username, email)
+                    query = "UPDATE usuario SET password = %s WHERE username = %s AND email = %s AND cpf = %s"
+                    valores = (hashed_password, username, email, cpf)
                     cursor.execute(query, valores)
 
                     app.logger.info(f"Usuario {username}, E-mail {email}, teve sua senha alterado com sucesso.")
