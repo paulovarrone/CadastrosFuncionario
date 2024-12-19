@@ -88,7 +88,9 @@ def criar_funcionario():
             contratacao DATE NOT NULL,
             status VARCHAR(10) NOT NULL,
             foto LONGTEXT NOT NULL,
-            assinatura LONGTEXT NOT NULL
+            assinatura LONGTEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         ) 
     ''')
     conexao.commit()
@@ -105,7 +107,9 @@ def criar_usuario():
             email VARCHAR(50) NOT NULL UNIQUE,
             username VARCHAR(50) NOT NULL PRIMARY KEY,
             password VARCHAR(250) NOT NULL,
-            cpf VARCHAR(14) UNIQUE NOT NULL
+            cpf VARCHAR(250) UNIQUE NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )
     ''')
 
@@ -145,7 +149,7 @@ def cadastrar_usuario(email, username, password, cpf):
         cursor.execute("INSERT INTO usuario (email, username, password, cpf) VALUES (%s, %s, %s, %s)", 
                        (email, username, hashed_password, hashed_cpf))
         conexao.commit()
-        app.logger.info(f"Usuário {username} cadastrado com sucesso.")
+        app.logger.info(f"Usuario {username} cadastrado com sucesso.")
         flash('Usuário cadastrado com sucesso.', 'sucesso')
         return True  # Retorna verdadeiro se o cadastro foi bem-sucedido
     except Exception as e:
