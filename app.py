@@ -244,16 +244,22 @@ def mudanca_senha():
             cursor.execute("SELECT * FROM usuario WHERE email = %s AND username = %s ", (email, username))
             usuario_existente = cursor.fetchone()
 
+            
+
             if usuario_existente:
-                if password != confirm_password:
-                    flash('As senhas não coincidem!', 'erro')
-                elif not bcrypt.check_password_hash(usuario_existente['cpf'], cpf):
+                hashed_cpf = bcrypt.check_password_hash(usuario_existente['cpf'], cpf)
+                if not hashed_cpf:
+                    app.logger.info(f"Usuario {username}, E-mail {email}, teve tentativa inválida de troca de senha.")
                     flash('Credenciais inválidas. Tente novamente.', 'erro')
+
+                elif password != confirm_password:
+                    flash('As senhas não coincidem!', 'erro')
+                    
                 else:
                     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
                     
-                    query = "UPDATE usuario SET password = %s WHERE username = %s AND email = %s AND cpf = %s"
-                    valores = (hashed_password, username, email, cpf)
+                    query = "UPDATE usuario SET password = %s WHERE username = %s AND email = %s"
+                    valores = (hashed_password, username, email)
                     cursor.execute(query, valores)
 
                     app.logger.info(f"Usuario {username}, E-mail {email}, teve sua senha alterado com sucesso.")
