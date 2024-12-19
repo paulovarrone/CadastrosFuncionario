@@ -136,11 +136,14 @@ def cadastrar_usuario(email, username, password, cpf):
 
         # Gerar hash da senha
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        app.logger.info(f"Hash gerado para {username}: {hashed_password}")
+        
+
+        hashed_cpf = bcrypt.generate_password_hash(cpf).decode('utf-8')
+        
 
         # Inserir novo usuário
         cursor.execute("INSERT INTO usuario (email, username, password, cpf) VALUES (%s, %s, %s, %s)", 
-                       (email, username, hashed_password, cpf))
+                       (email, username, hashed_password, hashed_cpf))
         conexao.commit()
         app.logger.info(f"Usuário {username} cadastrado com sucesso.")
         flash('Usuário cadastrado com sucesso.', 'sucesso')
@@ -238,15 +241,17 @@ def mudanca_senha():
             cpf = request.form['cpf']
             
 
-            cursor.execute("SELECT * FROM usuario WHERE email = %s AND username = %s AND cpf = %s", (email, username, cpf))
+            cursor.execute("SELECT * FROM usuario WHERE email = %s AND username = %s ", (email, username))
             usuario_existente = cursor.fetchone()
 
             if usuario_existente:
                 if password != confirm_password:
                     flash('As senhas não coincidem!', 'erro')
+                elif not bcrypt.check_password_hash(usuario_existente['cpf'], cpf):
+                    flash('Credenciais inválidas. Tente novamente.', 'erro')
                 else:
                     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-
+                    
                     query = "UPDATE usuario SET password = %s WHERE username = %s AND email = %s AND cpf = %s"
                     valores = (hashed_password, username, email, cpf)
                     cursor.execute(query, valores)
