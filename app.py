@@ -254,6 +254,7 @@ def mudanca_senha():
 
                 elif password != confirm_password:
                     flash('As senhas não coincidem!', 'erro')
+                    app.logger.info(f"Usuario {username}, E-mail {email}, teve tentativa inválida de troca de senha.")
                     
                 else:
                     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
