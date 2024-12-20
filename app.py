@@ -171,7 +171,6 @@ def autenticar_usuario(email,username, password):
         user = cursor.fetchone()
 
         if user:
-            app.logger.info(f"Hash armazenado para {username} com E-mail {email}")
             if bcrypt.check_password_hash(user['password'], password):
                 app.logger.info(f"Usuario {username} autenticado com sucesso.")
                 return user
