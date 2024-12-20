@@ -222,7 +222,7 @@ def login():
             session['user'] = user['username']  # Salva o usuário na sessão
             session['email']= user['email']
             app.logger.info(f"Usuario {username}, E-mail {email} logado com sucesso.")
-            flash('Login realizado com sucesso.', 'sucesso')
+            flash(f'Login realizado com sucesso. Bem-vindo {username}', 'sucesso')
             return redirect(url_for('index'))
         else:
             app.logger.warning(f"Tentativa de login falhada para o usuario {username}.")
