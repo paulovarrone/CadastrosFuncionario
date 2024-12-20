@@ -89,8 +89,10 @@ def criar_funcionario():
             status VARCHAR(10) NOT NULL,
             foto LONGTEXT NOT NULL,
             assinatura LONGTEXT NOT NULL,
+            updated_by VARCHAR(50) DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            
         ) 
     ''')
     conexao.commit()
@@ -485,8 +487,8 @@ def selecionar_e_cadastrar():
                 cursor.execute("SELECT * FROM funcionario WHERE matricula = %s", (matricula,))
                 pessoa = cursor.fetchone()
                 if pessoa:
-                    query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s WHERE matricula = %s"
-                    cursor.execute(query, (foto_b64, assinatura_b64,status, matricula))
+                    query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s, updated_by = %s WHERE matricula = %s"
+                    cursor.execute(query, (foto_b64, assinatura_b64,status, session['user'], matricula))
                     conexao.commit()
                     app.logger.info(f"Usuario {session['user']} E-mail {session['email']} atualizou os dados de {nome} com matricula {matricula} status {status}")
                     flash('Dados atualizadas com sucesso.', 'sucesso')
