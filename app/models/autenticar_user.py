@@ -3,9 +3,6 @@ from flask import *
 from app.extensions.bcrypt import bcrypt
 
 
-# app = create_app()
-
-
 def autenticar_usuario(email,username, password):
     conexao = connection()
     cursor = conexao.cursor(dictionary=True)

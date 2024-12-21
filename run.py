@@ -2,7 +2,6 @@ from app.models.logs_auditoria import setup_logging
 from app.models.banco import *
 from app.__init__ import create_app
 
-
 app = create_app()
 
 if __name__ == '__main__':

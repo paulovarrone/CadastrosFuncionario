@@ -2,8 +2,7 @@ from flask import *
 from app.models.banco import *
 from app.extensions.bcrypt import bcrypt
 
-def mudar_senha():  
-    
+def mudar_senha():   
     try:
         conexao = connection()
         cursor = conexao.cursor(dictionary=True)

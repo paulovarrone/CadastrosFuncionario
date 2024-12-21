@@ -3,7 +3,6 @@ from flask import *
 from app.models.autenticar_user import autenticar_usuario
 
 
-
 def logar():
     if request.method == 'POST':
         email = request.form['email']
