@@ -1,6 +1,6 @@
 from flask import *
-from app.models.img_to_b64 import imagem_para_base64
-from app.models.banco import *
+from app.controllers.img_to_b64 import imagem_para_base64
+from app.controllers.banco import *
 
 def selecionar_para_cadastrar():
     pessoa = None

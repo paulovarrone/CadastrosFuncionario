@@ -1,6 +1,6 @@
-from app.models.banco import *
+from app.controllers.banco import *
 from flask import *
-from app.models.autenticar_user import autenticar_usuario
+from app.controllers.autenticar_user import autenticar_usuario
 
 
 def logar():

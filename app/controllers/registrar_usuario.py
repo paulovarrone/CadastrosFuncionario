@@ -1,5 +1,5 @@
 from flask import *
-from app.models.cadastrar_usuario import cadastrar_usuario
+from app.controllers.cadastrar_usuario import cadastrar_usuario
 
 def registrar_usuario():
     if request.method == 'POST':

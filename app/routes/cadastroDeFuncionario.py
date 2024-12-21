@@ -1,6 +1,6 @@
 from flask import *
-from app.models.decorator.login_required import login_required
-from app.models.cadastro_funcionario import cadastro_funcinarios
+from app.controllers.decorator.login_required import login_required
+from app.controllers.cadastro_funcionario import cadastro_funcinarios
 
 bp = Blueprint('cadastroDeFuncionario', __name__)
 

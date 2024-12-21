@@ -1,5 +1,5 @@
 from flask import *
-from app.models.logout import deslogar
+from app.controllers.logout import deslogar
 
 bp = Blueprint('logout', __name__)
 

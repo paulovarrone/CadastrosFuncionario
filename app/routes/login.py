@@ -1,5 +1,5 @@
 from flask import *
-from app.models.login import logar
+from app.controllers.login import logar
 
 bp = Blueprint('login', __name__)
 

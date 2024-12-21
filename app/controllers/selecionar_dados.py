@@ -1,5 +1,5 @@
 from flask import *
-from app.models.banco import *
+from app.controllers.banco import *
 
 def selecionar_dados_cadastrais():
     pessoa = None

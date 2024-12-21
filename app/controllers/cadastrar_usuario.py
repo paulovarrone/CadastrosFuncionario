@@ -1,4 +1,4 @@
-from app.models.banco import *
+from app.controllers.banco import *
 from flask import *
 from app.extensions.bcrypt import bcrypt
 
