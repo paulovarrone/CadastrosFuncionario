@@ -1,9 +1,8 @@
 from flask import Flask
 from dotenv import load_dotenv
 import os
-from app.routes import index, login, cadastroDeFuncionario, carteiradigital, esqueci_senha, logout, registrarUsuario, selecionarDadosCadastrais
 from app.extensions.bcrypt import bcrypt
-
+from app.routes import index_bp, login_bp, cadastroDeFuncionario_bp, carteiradigital_bp, esqueci_senha_bp, logout_bp, registrarUsuario_bp, selecionarDadosCadastrais_bp
 
 load_dotenv()
 
@@ -12,13 +11,13 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     bcrypt.init_app(app)
 
-    app.register_blueprint(index.bp, url_prefix='/')
-    app.register_blueprint(login.bp, url_prefix='/login')
-    app.register_blueprint(registrarUsuario.bp, url_prefix='/registrarUsuario')
-    app.register_blueprint(cadastroDeFuncionario.bp, url_prefix='/cadastroDeFuncionario')
-    app.register_blueprint(carteiradigital.bp, url_prefix='/carteiradigital')
-    app.register_blueprint(esqueci_senha.bp, url_prefix='/esqueci_senha')
-    app.register_blueprint(logout.bp, url_prefix='/logout')
-    app.register_blueprint(selecionarDadosCadastrais.bp, url_prefix='/selecionarDadosCadastrais')
+    app.register_blueprint(index_bp, url_prefix='/')
+    app.register_blueprint(login_bp, url_prefix='/login')
+    app.register_blueprint(registrarUsuario_bp, url_prefix='/registrarUsuario')
+    app.register_blueprint(cadastroDeFuncionario_bp, url_prefix='/cadastroDeFuncionario')
+    app.register_blueprint(carteiradigital_bp, url_prefix='/carteiradigital')
+    app.register_blueprint(esqueci_senha_bp, url_prefix='/esqueci_senha')
+    app.register_blueprint(logout_bp, url_prefix='/logout')
+    app.register_blueprint(selecionarDadosCadastrais_bp, url_prefix='/selecionarDadosCadastrais')
 
     return app
