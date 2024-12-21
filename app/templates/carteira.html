@@ -34,7 +34,7 @@
       {{ validacao() }}
   
       <!-- Formulário para buscar funcionário -->
-      <form class="form-container" method="POST" action="/carteiradigital" enctype="multipart/form-data">
+      <form class="form-container" method="POST" action="{{ url_for('carteiradigital.carteiradigital') }}" enctype="multipart/form-data">
         <div class="form">
           <label for="matricula">Matrícula:</label>
           <input type="number" id="matricula" name="matricula" placeholder="Digite a matrícula" required value="{{ pessoa.matricula if pessoa else '' }}">
@@ -44,7 +44,7 @@
       </form>
   
       <!-- Formulário para envio de fotos e assinatura -->
-      <form class="form-container" method="POST" action="/carteiradigital" enctype="multipart/form-data">
+      <form class="form-container" method="POST" action="{{ url_for('carteiradigital.carteiradigital') }}" enctype="multipart/form-data">
         <div class="form">
           <label for="name">Nome:</label>
           <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">

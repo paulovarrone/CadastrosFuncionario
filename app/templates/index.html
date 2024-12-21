@@ -24,7 +24,7 @@
   </div>
 
   <div class="container">
-    <form class="form-container" method="POST" action="/cadastro" enctype="multipart/form-data">
+    <form class="form-container" method="POST" action="{{ url_for('cadastroDeFuncionario.cadastroDeFuncionario') }}" enctype="multipart/form-data">
       <div class="form">
         <label for="name">Nome:</label>
         <input type="text" id="name" name="nome" placeholder="Digite o nome" required>
