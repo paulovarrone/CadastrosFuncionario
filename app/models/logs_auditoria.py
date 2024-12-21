@@ -1,21 +1,27 @@
 import logging
+import os
 from logging.handlers import RotatingFileHandler
 
 def setup_logging(app):
+    
+    log_directory = "logs"
+    if not os.path.exists(log_directory):
+        os.makedirs(log_directory)
+
     # Criar manipulador para INFO
-    info_handler = RotatingFileHandler('infoLogs.log')
+    info_handler = RotatingFileHandler(os.path.join(log_directory, 'infoLogs.log'))
     info_handler.setLevel(logging.INFO)
     info_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     info_handler.setFormatter(info_formatter)
 
     # Criar manipulador para WARNING
-    warning_handler = RotatingFileHandler('warningLogs.log')
+    warning_handler = RotatingFileHandler(os.path.join(log_directory, 'warningLogs.log'))
     warning_handler.setLevel(logging.WARNING)
     warning_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     warning_handler.setFormatter(warning_formatter)
 
     # Criar manipulador para ERROR
-    error_handler = RotatingFileHandler('errorLogs.log')
+    error_handler = RotatingFileHandler(os.path.join(log_directory, 'errorLogs.log'))
     error_handler.setLevel(logging.ERROR)
     error_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     error_handler.setFormatter(error_formatter)
