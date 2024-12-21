@@ -7,7 +7,7 @@ from app.routes import index_bp, login_bp, cadastroDeFuncionario_bp, carteiradig
 load_dotenv()
 
 def create_app():
-    app = Flask(__name__, template_folder='./templates', static_folder='./static')
+    app = Flask(__name__, template_folder='templates', static_folder='static')
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     bcrypt.init_app(app)
 
