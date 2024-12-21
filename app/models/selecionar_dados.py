@@ -27,7 +27,7 @@ def selecionar_dados_cadastrais():
             cursor.close()
             conexao.close()
 
-        return redirect(url_for('selecionarDadosCadastrair.selecionarDadosCadastrair'))
+        return redirect(url_for('selecionarDadosCadastrais.selecionarDadosCadastrais'))
 
     # Recupera a matrícula da sessão e busca novamente os dados
     matricula = session.pop('matricula', None)
