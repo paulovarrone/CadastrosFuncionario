@@ -1,5 +1,5 @@
 from flask import *
-from app.controllers.decorator.login_required import login_required
+from app.decorator.login_required import login_required
 
 bp = Blueprint('index', __name__)
 
