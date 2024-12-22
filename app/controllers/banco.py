@@ -3,7 +3,7 @@ import mysql.connector
 
 def connection():
     conexao = mysql.connector.connect(
-        host = 'localhost',
+        host = 'localhost', #para docker host.docker.internal
         user = 'root',
         password = '',
         database = 'recursos_humanos'
@@ -13,7 +13,7 @@ def connection():
 
 def criar_banco():
     conexao = mysql.connector.connect(
-        host='localhost',
+        host='localhost', #para docker host.docker.internal
         user='root',
         password=''
     )
