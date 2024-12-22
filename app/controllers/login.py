@@ -1,4 +1,4 @@
-from app.controllers.banco import *
+# from app.controllers.banco import *
 from flask import render_template, request, redirect, url_for, session, flash, current_app
 from app.controllers.autenticar_user import autenticar_usuario
 
