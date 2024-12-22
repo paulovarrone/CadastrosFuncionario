@@ -64,3 +64,17 @@ def criar_usuario():
     conexao.commit()
     cursor.close()
     conexao.close()
+
+#     CRIAR BANCO DE DADOS
+
+# usuariologado
+# usuariodeslogado
+# usuarioalteroudados
+# usuarioselectdados
+# usuariocadastroudados
+
+# quando usuario entrou
+# quando usuario sair
+# quando usuario alterou dados de funcionario
+# quando usuario selecionou funcionario
+# quando usuario cadastrou funcionario
