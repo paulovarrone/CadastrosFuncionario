@@ -1,5 +1,5 @@
-from flask import *
-from app.controllers.banco import *
+from flask import render_template, request, redirect, url_for, session, flash, current_app
+from app.controllers.banco import connection
 
 def selecionar_dados_cadastrais():
     pessoa = None

@@ -1,5 +1,5 @@
 from app.controllers.logs_auditoria import setup_logging
-from app.controllers.banco import *
+from app.controllers.banco import criar_banco, criar_funcionario, criar_usuario
 from app.__init__ import create_app
 
 app = create_app()

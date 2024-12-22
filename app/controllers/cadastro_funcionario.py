@@ -1,7 +1,7 @@
-from flask import *
+from flask import request, redirect, url_for, render_template, flash, session, current_app
 from app.controllers.img_to_b64 import imagem_para_base64
 from mysql.connector.errors import IntegrityError
-from app.controllers.banco import *
+from app.controllers.banco import connection
 
 def cadastro_funcinarios():
     if request.method == 'POST':

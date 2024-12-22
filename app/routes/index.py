@@ -1,4 +1,4 @@
-from flask import *
+from flask import Blueprint, render_template
 from app.decorator.login_required import login_required
 
 bp = Blueprint('index', __name__)

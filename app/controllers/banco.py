@@ -1,5 +1,5 @@
 import mysql.connector
-from mysql.connector.errors import IntegrityError
+
 
 def connection():
     conexao = mysql.connector.connect(

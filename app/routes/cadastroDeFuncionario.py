@@ -1,4 +1,4 @@
-from flask import *
+from flask import Blueprint
 from app.decorator.login_required import login_required
 from app.controllers.cadastro_funcionario import cadastro_funcinarios
 

@@ -1,4 +1,4 @@
-from flask import *
+from flask import Blueprint
 from app.controllers.esqueci_senha import mudar_senha
 
 bp = Blueprint('esqueci_senha', __name__)

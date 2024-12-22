@@ -1,5 +1,5 @@
-from app.controllers.banco import *
-from flask import *
+from app.controllers.banco import connection
+from flask import current_app
 from app.extensions.bcrypt import bcrypt
 
 

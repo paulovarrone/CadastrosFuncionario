@@ -1,4 +1,4 @@
-from flask import *
+from flask import Blueprint
 from app.controllers.selecionar_dados import selecionar_dados_cadastrais
 from app.decorator.login_required import login_required
 

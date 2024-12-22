@@ -1,4 +1,4 @@
-from flask import *
+from flask import Blueprint
 from app.controllers.registrar_usuario import registrar_usuario
 
 bp = Blueprint('registrarUsuario', __name__)

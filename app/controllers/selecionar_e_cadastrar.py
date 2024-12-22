@@ -1,6 +1,6 @@
-from flask import *
+from flask import render_template, request, flash, redirect, url_for, current_app, session
 from app.controllers.img_to_b64 import imagem_para_base64
-from app.controllers.banco import *
+from app.controllers.banco import connection
 
 def selecionar_para_cadastrar():
     pessoa = None

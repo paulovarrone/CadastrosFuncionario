@@ -1,5 +1,5 @@
-from flask import *
-from app.controllers.banco import *
+from flask import request, render_template, flash, redirect, url_for, current_app
+from app.controllers.banco import connection
 from app.extensions.bcrypt import bcrypt
 
 def mudar_senha():   
