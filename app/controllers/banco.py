@@ -105,13 +105,13 @@ def usuario_alterou_dados_func():
     cursor.execute(''' 
         CREATE TABLE IF NOT EXISTS usuario_alterou_dados_func (
             id INT AUTO_INCREMENT UNIQUE,
-            email VARCHAR(50) NOT NULL,
-            username VARCHAR(50) NOT NULL,
+            email_user_alterou VARCHAR(50) NOT NULL,
+            username_user_alterou VARCHAR(50) NOT NULL,
             nome_funcionario VARCHAR(50) NOT NULL,
             matricula_funcionario VARCHAR(50) NOT NULL,
-            status BOOLEAN DEFAULT NULL, 
-            foto BOOLEAN DEFAULT NULL,
-            assinatura BOOLEAN DEFAULT NULL,             
+            status VARCHAR(50) DEFAULT NULL, 
+            foto VARCHAR(50) DEFAULT NULL,
+            assinatura VARCHAR(50) DEFAULT NULL,             
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )
     ''')

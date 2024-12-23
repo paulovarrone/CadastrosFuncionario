@@ -2,6 +2,8 @@ from flask import render_template, request, flash, redirect, url_for, current_ap
 from app.controllers.img_to_b64 import imagem_para_base64
 from app.controllers.banco import connection
 from app.controllers.auditoria.usuario_select.usuario_select_func import auditoria_banco_select_funcionario
+from app.controllers.auditoria.usuario_alter_dados_func.usuario_alterou_dados_func import auditoria_usuario_alterou_dados_func
+
 def selecionar_para_cadastrar():
     pessoa = None
     if request.method == 'POST':
@@ -34,10 +36,13 @@ def selecionar_para_cadastrar():
             status = request.form['status']
             nome = request.form['nome']
 
+            alterou_foto = False
+            alterou_assinatura = False
+
             if not matricula:
                 current_app.logger.warning('Matrícula não fornecida para atualização.')
                 flash('Matrícula é obrigatória para atualizar fotos.', 'erro')
-                return redirect(url_for('selecionar_e_cadastrar'))
+                return redirect(url_for('carteiradigital.carteiradigital'))
 
             foto_b64 = imagem_para_base64(foto)
             assinatura_b64 = imagem_para_base64(assinatura)
@@ -51,9 +56,14 @@ def selecionar_para_cadastrar():
                     query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s, updated_by = %s WHERE matricula = %s"
                     cursor.execute(query, (foto_b64, assinatura_b64,status, session['user'], matricula))
                     conexao.commit()
+                    
+                    alterou_assinatura, alterou_foto, = "Adicionado", "Adicionado"
+                    auditoria_usuario_alterou_dados_func(session['email'], session['user'], nome, matricula, status, alterou_foto, alterou_assinatura)
+
+
                     current_app.logger.info(f"Usuario {session['user']} E-mail {session['email']} atualizou os dados de {nome} com matricula {matricula} status {status}")
                     flash('Dados atualizadas com sucesso.', 'sucesso')
-                    return redirect(url_for('selecionar_e_cadastrar'))
+                    return redirect(url_for('carteiradigital.carteiradigital'))
                 else:
                     current_app.logger.warning(f"Funcionario com matricula {matricula} nao encontrado para atualizacao.")
                     flash('Usuário não encontrado para atualizar dados.', 'erro')
