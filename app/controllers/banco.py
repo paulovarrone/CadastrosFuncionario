@@ -29,7 +29,7 @@ def criar_funcionario():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS funcionario(
             id INT AUTO_INCREMENT UNIQUE,
-            usuario_que_cadastrou VARCHAR(50) NOT NULL,
+            usuario_cadastrante VARCHAR(50) NOT NULL,
             nome VARCHAR(100) NOT NULL,
             matricula VARCHAR(10) PRIMARY KEY,
             nascimento DATE NOT NULL,
@@ -108,7 +108,10 @@ def usuario_alterou_dados_func():
             email VARCHAR(50) NOT NULL,
             username VARCHAR(50) NOT NULL,
             nome_funcionario VARCHAR(50) NOT NULL,
-            matricula_funcionario VARCHAR(50) NOT NULL,       
+            matricula_funcionario VARCHAR(50) NOT NULL,
+            status BOOLEAN DEFAULT NULL, 
+            foto BOOLEAN DEFAULT NULL,
+            assinatura BOOLEAN DEFAULT NULL,             
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )
     ''')
@@ -141,8 +144,8 @@ def usuario_cadastrou_funcionario():
     cursor.execute(''' 
         CREATE TABLE IF NOT EXISTS usuario_cadastrou_funcionario (
             id INT AUTO_INCREMENT UNIQUE,
-            email VARCHAR(50) NOT NULL,
-            username VARCHAR(50) NOT NULL,
+            email_cadastrante VARCHAR(50) NOT NULL,
+            username_cadastrante VARCHAR(50) NOT NULL,
             nome_funcionario VARCHAR(50) NOT NULL,
             matricula_funcionario VARCHAR(50) NOT NULL,       
             hora_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP

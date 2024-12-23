@@ -2,6 +2,7 @@ from flask import request, redirect, url_for, render_template, flash, session, c
 from app.controllers.img_to_b64 import imagem_para_base64
 from mysql.connector.errors import IntegrityError
 from app.controllers.banco import connection
+from app.controllers.auditoria.usuario_cadastra_func.usuario_cad_func import auditoria_usuario_cadastrou_funcionario
 
 def cadastro_funcinarios():
     if request.method == 'POST':
@@ -26,11 +27,13 @@ def cadastro_funcinarios():
             pessoa = cursor.fetchall()
             
             if not pessoa:
-                query = ("INSERT INTO funcionario(usuario_que_cadastrou,nome,matricula,nascimento,contratacao,status,foto,assinatura) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)")
+                query = ("INSERT INTO funcionario(usuario_cadastrante,nome,matricula,nascimento,contratacao,status,foto,assinatura) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)")
                 valores = (session['user'],nome,matricula,nascimento,contratacao,status,foto_b64,assinatura_b64)
 
                 cursor.execute(query, valores)
                 conexao.commit()
+
+                auditoria_usuario_cadastrou_funcionario(session['email'],session['user'],nome,matricula)
                 current_app.logger.info(f"Usuario {session['user']} E-mail {session['email']} cadastrou o funcionario {nome} matricula {matricula}.")
                 flash('Cadastro realizado com sucesso.', 'sucesso')
             else:
