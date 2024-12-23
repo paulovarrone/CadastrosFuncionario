@@ -2,6 +2,7 @@ from app.controllers.banco import connection
 from flask import flash, current_app
 from app.extensions.bcrypt import bcrypt
 
+
 def cadastrar_usuario(email, username, password, cpf):
     conexao = connection()
     cursor = conexao.cursor(dictionary=True)
@@ -34,7 +35,7 @@ def cadastrar_usuario(email, username, password, cpf):
         cursor.execute("INSERT INTO usuario (email, username, password, cpf) VALUES (%s, %s, %s, %s)", 
                        (email, username, hashed_password, hashed_cpf))
         conexao.commit()
-        current_app.logger.info(f"Usuario {username} cadastrado com sucesso.")
+        current_app.logger.info(f"Usuario {username}, E-mail {email} cadastrado com sucesso.")
         flash('Usuário cadastrado com sucesso.', 'sucesso')
         return True  # Retorna verdadeiro se o cadastro foi bem-sucedido
     except Exception as e:

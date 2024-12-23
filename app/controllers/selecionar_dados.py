@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, session, flash, current_app
 from app.controllers.banco import connection
+from app.controllers.auditoria.usuario_select.usuario_select_func import auditoria_banco_select_funcionario
 
 def selecionar_dados_cadastrais():
     pessoa = None
@@ -19,6 +20,7 @@ def selecionar_dados_cadastrais():
             else:
                 # Salva a matrícula na sessão
                 session['matricula'] = matricula
+                auditoria_banco_select_funcionario(session['email'],session['user'],pessoa['nome'],matricula)
                 current_app.logger.info(f"Usuario {session['user']}, E-mail {session['email']}, selecionou dados do funcionario: {pessoa['nome']} com matricula: {matricula}")
         except Exception as e:
             flash(f"Erro {e}", 'erro')

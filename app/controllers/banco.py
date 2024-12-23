@@ -29,6 +29,7 @@ def criar_funcionario():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS funcionario(
             id INT AUTO_INCREMENT UNIQUE,
+            usuario_que_cadastrou VARCHAR(50) NOT NULL,
             nome VARCHAR(100) NOT NULL,
             matricula VARCHAR(10) PRIMARY KEY,
             nascimento DATE NOT NULL,
@@ -65,16 +66,88 @@ def criar_usuario():
     cursor.close()
     conexao.close()
 
-#     CRIAR BANCO DE DADOS
+def usuario_logado():
+    conexao = connection()
+    cursor = conexao.cursor()
 
-# usuariologado
-# usuariodeslogado
-# usuarioalteroudados
-# usuarioselectdados
-# usuariocadastroudados
+    cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS usuario_logado (
+            id INT AUTO_INCREMENT UNIQUE,
+            email VARCHAR(50) NOT NULL,
+            username VARCHAR(50) NOT NULL,
+            hora_acesso TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
 
-# quando usuario entrou
-# quando usuario sair
-# quando usuario alterou dados de funcionario
-# quando usuario selecionou funcionario
-# quando usuario cadastrou funcionario
+    conexao.commit()
+    cursor.close()
+
+def usuario_deslogado():
+    conexao = connection()
+    cursor = conexao.cursor()
+
+    cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS usuario_deslogado (
+            id INT AUTO_INCREMENT UNIQUE,
+            email VARCHAR(50) NOT NULL,
+            username VARCHAR(50) NOT NULL,
+            hora_saida TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    conexao.commit()
+    cursor.close()
+
+def usuario_alterou_dados_func():
+    conexao = connection()
+    cursor = conexao.cursor()
+
+    cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS usuario_alterou_dados_func (
+            id INT AUTO_INCREMENT UNIQUE,
+            email VARCHAR(50) NOT NULL,
+            username VARCHAR(50) NOT NULL,
+            nome_funcionario VARCHAR(50) NOT NULL,
+            matricula_funcionario VARCHAR(50) NOT NULL,       
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )
+    ''')
+
+    conexao.commit()
+    cursor.close()
+
+def usuario_select_funcionario():
+    conexao = connection()
+    cursor = conexao.cursor()
+
+    cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS usuario_select_funcionario (
+            id INT AUTO_INCREMENT UNIQUE,
+            email VARCHAR(50) NOT NULL,
+            username VARCHAR(50) NOT NULL,
+            nome_funcionario_selecionado VARCHAR(50) NOT NULL,
+            matricula_funcionario_selecionado VARCHAR(50) NOT NULL,       
+            hora_selecao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    conexao.commit()
+    cursor.close()
+
+def usuario_cadastrou_funcionario():
+    conexao = connection()
+    cursor = conexao.cursor()
+
+    cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS usuario_cadastrou_funcionario (
+            id INT AUTO_INCREMENT UNIQUE,
+            email VARCHAR(50) NOT NULL,
+            username VARCHAR(50) NOT NULL,
+            nome_funcionario VARCHAR(50) NOT NULL,
+            matricula_funcionario VARCHAR(50) NOT NULL,       
+            hora_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    conexao.commit()
+    cursor.close()

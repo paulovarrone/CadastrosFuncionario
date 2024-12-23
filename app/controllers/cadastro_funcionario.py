@@ -24,10 +24,10 @@ def cadastro_funcinarios():
         try:
             cursor.execute("SELECT * FROM funcionario WHERE matricula = %s", (matricula,))
             pessoa = cursor.fetchall()
-
+            
             if not pessoa:
-                query = ("INSERT INTO funcionario(nome,matricula,nascimento,contratacao,status,foto,assinatura) VALUES(%s,%s,%s,%s,%s,%s,%s)")
-                valores = (nome,matricula,nascimento,contratacao,status,foto_b64,assinatura_b64)
+                query = ("INSERT INTO funcionario(usuario_que_cadastrou,nome,matricula,nascimento,contratacao,status,foto,assinatura) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)")
+                valores = (session['user'],nome,matricula,nascimento,contratacao,status,foto_b64,assinatura_b64)
 
                 cursor.execute(query, valores)
                 conexao.commit()
