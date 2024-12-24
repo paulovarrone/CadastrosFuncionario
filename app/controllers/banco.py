@@ -156,6 +156,8 @@ def usuario_cadastrou_funcionario():
     conexao.commit()
     cursor.close()
 
+
+
 def banco():
     criar_banco()
     criar_funcionario()

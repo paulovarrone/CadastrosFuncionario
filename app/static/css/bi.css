@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.menu button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.graficos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 200px;
+}
+
+
+h1, h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin: 50px;
+}
+
+form {
+    text-align: center;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+form label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+form select {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+form button {
+    padding: 6px 15px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 1400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #34495e;
+    color: white;
+    width: 500px;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #dcdde1;
+}
+
+img {
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #34495e;
+    color: white;
+}
+
+footer a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: #bdc3c7;
+    text-decoration: underline;
+}

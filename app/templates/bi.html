@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/bi.css">
+    <title>Gráfico e Tabela</title>
+</head>
+<body>
+    {% include 'includes/menu.jinja2' %}
+
+    <div class="graficos">
+        <div class="grafico_situacao">
+            <h1>Situaçãos</h1>
+            <img src="{{ url_for('static', filename='imgBI/situacao.png') }}" alt="Gráfico de Pizza">
+        </div>
+        
+        <div class="grafico_identificacao_sexual">
+            <h1>Identificação Sexual</h1 >
+            <img src="{{ url_for('static', filename='imgBI/identificacao.png') }}" alt="Gráfico de Identificação Sexual">
+        </div>
+    </div>
+        
+    <h2>Tabela de Funcionários</h2>
+    <form method="get" action="{{ url_for('powerBI.powerBI') }}">
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="">Selecione o Status</option>
+            <option value="Todos" {% if filtro == 'Todos' %}selected{% endif %}>Todos</option>
+            <option value="Ativo" {% if filtro == 'Ativo' %}selected{% endif %}>Ativo</option>
+            <option value="Inativo" {% if filtro == 'Inativo' %}selected{% endif %}>Inativo</option>
+            <option value="Desligado" {% if filtro == 'Desligado' %}selected{% endif %}>Desligado</option>
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+        
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Situação</th>
+                <th>Contratação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tabela %}
+            <tr>
+                <td>{{ row['nome'] }}</td>
+                <td>{{ row['matricula'] }}</td>
+                <td>{{ row['status'] }}</td>
+                <td>{{ row['contratacao'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

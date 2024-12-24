@@ -6,3 +6,4 @@ from .login import bp as login_bp
 from .logout import bp as logout_bp
 from .registrarUsuario import bp as registrarUsuario_bp
 from .selecionarDadosCadastrais import bp as selecionarDadosCadastrais_bp
+from .powerBI import bp as powerBI_bp
