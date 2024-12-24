@@ -35,6 +35,7 @@ def criar_funcionario():
             nascimento DATE NOT NULL,
             contratacao DATE NOT NULL,
             status VARCHAR(10) NOT NULL,
+            identificacao_sexual VARCHAR(10) NOT NULL,
             updated_by VARCHAR(50) DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
