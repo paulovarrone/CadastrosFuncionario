@@ -4,6 +4,8 @@ import os
 from app.extensions.bcrypt import bcrypt
 from app.routes import index_bp, login_bp, cadastroDeFuncionario_bp, carteiradigital_bp, esqueci_senha_bp, logout_bp, registrarUsuario_bp, selecionarDadosCadastrais_bp
 from app.middleware.timeout import timeout
+from app.controllers.banco import banco
+from app.controllers.logs_auditoria import setup_logging
 
 load_dotenv()
 
@@ -13,6 +15,8 @@ def create_app():
     bcrypt.init_app(app)
 
     app.before_request(timeout)
+    banco()
+    setup_logging(app)
 
     app.register_blueprint(index_bp, url_prefix='/')
     app.register_blueprint(login_bp, url_prefix='/login')
