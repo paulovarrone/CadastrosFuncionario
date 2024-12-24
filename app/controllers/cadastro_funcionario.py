@@ -11,6 +11,7 @@ def cadastro_funcinarios():
         nascimento = request.form['nascimento']
         contratacao = request.form['contratacao']
         status = request.form['status']
+        identificacao_sexual = request.form['identificacao_sexual']
         foto = request.files.get('foto')
         assinatura = request.files.get('assinatura')
 
@@ -27,8 +28,8 @@ def cadastro_funcinarios():
             pessoa = cursor.fetchall()
             
             if not pessoa:
-                query = ("INSERT INTO funcionario(usuario_cadastrante,nome,matricula,nascimento,contratacao,status,foto,assinatura) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)")
-                valores = (session['user'],nome,matricula,nascimento,contratacao,status,foto_b64,assinatura_b64)
+                query = ("INSERT INTO funcionario(usuario_cadastrante,nome,matricula,nascimento,contratacao,status,identificacao_sexual,foto,assinatura) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)")
+                valores = (session['user'],nome,matricula,nascimento,contratacao,status,identificacao_sexual,foto_b64,assinatura_b64)
 
                 cursor.execute(query, valores)
                 conexao.commit()

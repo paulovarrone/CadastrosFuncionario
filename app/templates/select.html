@@ -42,6 +42,10 @@
         <label for="status">Status:</label>
         <input type="text" id="status" name="status" value="{{ pessoa.status if pessoa else '' }}" placeholder="Status do funcionário" readonly>
 
+        <label for="identificacao_sexual">Identificação sexual do funcionário:</label>
+        <input type="text" id="identificacao_sexual" name="identificacao_sexual" value="{{ pessoa.identificacao_sexual if pessoa else '' }}" placeholder="Identificação sexual do funcionário" readonly>
+
+
         <button id="selectFuncionario" type="submit"><b>SELECIONAR FUNCIONÁRIO</b></button>
       </div>
 

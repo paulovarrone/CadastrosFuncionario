@@ -57,7 +57,10 @@
   
           <label for="contratacao">Data de contratação:</label>
           <input type="date" id="contratacao" name="contratacao" readonly value="{{ pessoa.contratacao if pessoa else '' }}">
-  
+          
+          <label for="identificacao_sexual">Identificação sexual do funcionário:</label>
+          <input type="text" id="identificacao_sexual" name="identificacao_sexual" value="{{ pessoa.identificacao_sexual if pessoa else '' }}" placeholder="Identificação sexual do funcionário" readonly>
+
           <label for="status">Status:</label>
           <select id="status" name="status" required>
             <option value="">Selecione o Status</option>
