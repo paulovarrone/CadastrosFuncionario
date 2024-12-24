@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from app.extensions.bcrypt import bcrypt
 from app.routes import index_bp, login_bp, cadastroDeFuncionario_bp, carteiradigital_bp, esqueci_senha_bp, logout_bp, registrarUsuario_bp, selecionarDadosCadastrais_bp
+from app.middleware.timeout import timeout
 
 load_dotenv()
 
@@ -10,6 +11,8 @@ def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='static')
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     bcrypt.init_app(app)
+
+    app.before_request(timeout)
 
     app.register_blueprint(index_bp, url_prefix='/')
     app.register_blueprint(login_bp, url_prefix='/login')
