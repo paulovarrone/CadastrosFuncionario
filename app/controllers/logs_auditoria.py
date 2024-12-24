@@ -38,3 +38,5 @@ def setup_logging(app):
     console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     console_handler.setFormatter(console_formatter)
     logger.addHandler(console_handler)
+
+    logger.setLevel(logging.INFO)
