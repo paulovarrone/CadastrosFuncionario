@@ -41,6 +41,14 @@ body {
 }
 
 
+.tabResumo {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 1400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
 h1, h2 {
     text-align: center;
     color: #2c3e50;
@@ -67,7 +75,7 @@ form select {
 
 form button {
     padding: 6px 15px;
-    background-color: #3498db;
+    background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -75,7 +83,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #2980b9;
+    background-color: #0056b3;
 }
 
 table {
@@ -93,7 +101,8 @@ table th, table td {
 }
 
 table th {
-    background-color: #34495e;
+    /* background-color: #34495e; */
+    background-color: #007bff;
     color: white;
     width: 500px;
 }
