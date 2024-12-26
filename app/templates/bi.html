@@ -4,23 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/bi.css">
-    {% include 'includes/favicon.jinja2' %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    {% include 'includes/favicon.jinja2' %}    
     <title>PowerBI</title>
 </head>
 <body>
     {% include 'includes/menu.jinja2' %}
 
-    <div class="graficos">
+    <!-- <div class="graficos">
         <div class="grafico_situacao">
             <h1>Situaçãos</h1>
             <img src="{{ url_for('static', filename='imgBI/situacao.png') }}" alt="Gráfico de Pizza">
         </div>
         
-        <!-- <div class="grafico_identificacao_sexual">
+        <div class="grafico_identificacao_sexual">
             <h1>Identificação Sexual</h1 >
             <img src="{{ url_for('static', filename='imgBI/identificacao.png') }}" alt="Gráfico de Identificação Sexual">
-        </div> -->
-    </div>
+        </div> 
+    </div> -->
+
+    <h1>Situaçãos dos funcionários</h1>
+    <div>{{ grafico_situacao | safe }}</div>
 
     <div class="resumo">
 

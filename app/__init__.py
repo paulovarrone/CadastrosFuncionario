@@ -13,11 +13,11 @@ matplotlib.use('Agg')
 
 def create_app():
    
-    static_path = os.path.join('app','static', 'imgBI')
+    # static_path = os.path.join('app','static', 'imgBI')
 
-    # Verifica se o diretório existe e cria se necessário
-    if not os.path.exists(static_path):
-        os.makedirs(static_path)
+    # # Verifica se o diretório existe e cria se necessário
+    # if not os.path.exists(static_path):
+    #     os.makedirs(static_path)
 
     app = Flask(__name__, template_folder='templates', static_folder='static')
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
