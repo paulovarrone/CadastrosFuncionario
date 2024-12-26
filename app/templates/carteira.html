@@ -46,6 +46,15 @@
       <!-- Formulário para envio de fotos e assinatura -->
       <form class="form-container" method="POST" action="{{ url_for('carteiradigital.carteiradigital') }}" enctype="multipart/form-data">
         <div class="form">
+          
+          <label for="status">Status:</label>
+          <select id="status" name="status" required>
+            <option value="">Selecione o Status</option>
+            <option value="Ativo">Ativo</option>
+            <option value="Inativo">Inativo</option>
+            <option value="Desligado">Desligado</option>
+          </select>
+
           <label for="name">Nome:</label>
           <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
   
@@ -61,13 +70,6 @@
           <label for="identificacao_sexual">Identificação sexual do funcionário:</label>
           <input type="text" id="identificacao_sexual" name="identificacao_sexual" value="{{ pessoa.identificacao_sexual if pessoa else '' }}" placeholder="Identificação sexual do funcionário" readonly>
 
-          <label for="status">Status:</label>
-          <select id="status" name="status" required>
-            <option value="">Selecione o Status</option>
-            <option value="Ativo">Ativo</option>
-            <option value="Inativo">Inativo</option>
-            <option value="Desligado">Desligado</option>
-          </select>
         
           <button id="cadastrarCarteirinha" type="submit"><b>CADASTRAR CARTEIRA DIGITAL</b></button>
         </div>
