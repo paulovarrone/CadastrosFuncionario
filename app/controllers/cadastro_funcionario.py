@@ -18,16 +18,16 @@ def cadastro_funcinarios():
         frase_estagiario = request.form.get('frase_estagiario', None)
 
 
-        # foto = request.files.get('foto')
-        # assinatura = request.files.get('assinatura')
+        foto = request.files.get('foto')
+        assinatura = request.files.get('assinatura')
 
         conexao = connection()
         cursor = conexao.cursor(dictionary=True)
 
 
 
-        # foto_b64 = imagem_para_base64(foto)
-        # assinatura_b64 = imagem_para_base64(assinatura)
+        foto_b64 = imagem_para_base64(foto)
+        assinatura_b64 = imagem_para_base64(assinatura)
 
         try:
             cursor.execute("SELECT * FROM funcionario WHERE matricula = %s", (matricula,))
