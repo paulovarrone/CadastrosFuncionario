@@ -24,6 +24,8 @@
   </div>
 
   <div class="container">
+    {{ validacao() }}
+
     <form class="form-container" method="POST" action="{{ url_for('cadastroDeFuncionario.cadastroDeFuncionario') }}" enctype="multipart/form-data">
       <div class="form">
         <label for="name">Nome:</label>
@@ -107,19 +109,19 @@
       <div class="photo-section">
         <div class="photo-container">
           <label for="foto"><b>Foto do funcionário:</b></label>
-          <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event, 'imgFoto')" >
+          <input type="file" id="foto" name="foto" accept="image/*" required onchange="previewImage(event, 'imgFoto')" >
           <img id="imgFoto" src="{{ pessoa.foto if pessoa and pessoa.foto else url_for('static', filename='assets/foto.png') }}" alt="Foto do funcionário" >
         </div>
 
         <div class="photo-container">
           <label for="assinatura"><b>Assinatura do funcionário:</b></label>
-          <input type="file" id="assinatura" name="assinatura" accept="image/*" onchange="previewImage(event, 'imgAssinatura')" >
+          <input type="file" id="assinatura" name="assinatura" accept="image/*" required onchange="previewImage(event, 'imgAssinatura')" >
           <img id="imgAssinatura" src="{{ pessoa.assinatura if pessoa and pessoa.assinatura else url_for('static', filename='assets/assinatura.png') }}">
         </div>
       </div>
     </form>
     <br>
-    {{ validacao() }}
+    
   </div>
 
   {% include 'includes/footer.jinja2' %}
