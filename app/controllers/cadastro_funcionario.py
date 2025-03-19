@@ -40,7 +40,7 @@ def cadastro_funcinarios():
                     valores = (nome, matricula, cpf, nascimento, cargo, mae, pai, nacionalidade, status, frase_estagiario, foto_b64, assinatura_b64)
                 else:
                     query = ("INSERT INTO funcionario (NOME, MATRICULA, CPF, DATA_NASCIMENTO, CARGO, MAE, PAI, NACIONALIDADE, STATUS, foto, assinatura) "
-                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
                     valores = (nome, matricula, cpf, nascimento, cargo, mae, pai, nacionalidade, status, foto_b64, assinatura_b64)
 
 
