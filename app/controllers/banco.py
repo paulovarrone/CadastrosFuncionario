@@ -22,27 +22,38 @@ def criar_banco():
     conexao.commit()
     conexao.close()
 
+
+            
+           
+           
+
+            # usuario_cadastrante VARCHAR(50) NOT NULL,
+            # updated_by VARCHAR(50) DEFAULT NULL,
+            # created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            # updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            
+
 def criar_funcionario():
     conexao = connection()
     cursor = conexao.cursor()
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS funcionario(
-            id INT AUTO_INCREMENT UNIQUE,
-            usuario_cadastrante VARCHAR(50) NOT NULL,
-            nome VARCHAR(100) NOT NULL,
-            matricula VARCHAR(10) PRIMARY KEY,
-            nascimento DATE NOT NULL,
-            contratacao DATE NOT NULL,
-            status VARCHAR(10) NOT NULL,
-            identificacao_sexual VARCHAR(10) NOT NULL,
-            updated_by VARCHAR(50) DEFAULT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            foto LONGTEXT NOT NULL,
-            assinatura LONGTEXT NOT NULL
+            NOME VARCHAR(100) NOT NULL,
+            MATRICULA VARCHAR(9) NOT NULL,
+            CPF VARCHAR(14) NOT NULL,
+            DATA_NASCIMENTO DATE NOT NULL,
+            CARGO VARCHAR(70) NOT NULL,
+            MAE VARCHAR(100) NOT NULL,
+            PAI VARCHAR(100),
+            NACIONALIDADE VARCHAR(40) NOT NULL,
+            STATUS VARCHAR(10) NOT NULL,
+            FRASE_ESTAGIARIO VARCHAR(165),
+            foto LONGTEXT DEFAULT NULL,
+            assinatura LONGTEXT DEFAULT NULL     
         ) 
     ''')
+
     conexao.commit()
     cursor.close()
     conexao.close()

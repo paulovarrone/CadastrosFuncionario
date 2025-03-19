@@ -143,13 +143,25 @@ h2 {
   font-weight: bold;
 }
 
-.form input[type="text"], #status,#identificacao_sexual, .form input[type="date"], .form input[type="number"] {
+.form input[type="text"], #status,#identificacao_sexual, .form input[type="date"], .form input[type="number"], #cargo {
   padding: 8px;
   font-size: 14px;
   width: 100%;
   /* box-sizing: border-box; */
   border-radius: 5px;
   border: 1px solid #698a97
+}
+
+input[type="checkbox"] {
+  width: 25px; /* Largura da checkbox */
+  height: 25px; /* Altura da checkbox */
+  cursor: pointer;
+}
+
+#est {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
 }
 
 .photo-section {

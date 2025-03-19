@@ -7,7 +7,7 @@ from app.controllers.auditoria.usuario_alter_dados_func.usuario_alterou_dados_fu
 def selecionar_para_cadastrar():
     pessoa = None
     if request.method == 'POST':
-        matricula = request.form.get('matricula', '').strip()
+        matricula = request.form.get('matricula', '')
         
         # Processo de seleção do funcionário
         if 'foto' not in request.files:
@@ -21,8 +21,8 @@ def selecionar_para_cadastrar():
                     current_app.logger.warning(f"Funcionario com matricula {matricula} nao encontrado para atualizaçao.")
                     flash('Usuário não encontrado no sistema.', 'erro')
                 else:
-                    auditoria_banco_select_funcionario(session['email'],session['user'],pessoa['nome'],matricula)
-                    current_app.logger.info(f"Usuario {session['user']} E-mail {session['email']} acessou os dados do funcionario {pessoa['nome']} com matricula {matricula}.")
+                    auditoria_banco_select_funcionario(session['email'],session['user'],pessoa['NOME'],matricula)
+                    current_app.logger.info(f"Usuario {session['user']} E-mail {session['email']} acessou os dados do funcionario {pessoa['NOME']} com matricula {matricula}.")
             except Exception as e:
                 current_app.logger.error(f'Erro ao buscar funcionario {matricula} para atualizaçao: {e}')
                 flash(f'Erro ao buscar funcionário: {e}', 'erro')
@@ -53,15 +53,17 @@ def selecionar_para_cadastrar():
                 cursor.execute("SELECT * FROM funcionario WHERE matricula = %s", (matricula,))
                 pessoa = cursor.fetchone()
                 if pessoa:
-                    query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s, updated_by = %s WHERE matricula = %s"
-                    cursor.execute(query, (foto_b64, assinatura_b64,status, session['user'], matricula))
+                    query = "UPDATE funcionario SET foto = %s, assinatura = %s, status = %s WHERE matricula = %s"
+                    valor = (foto_b64, assinatura_b64, status, matricula)
+
+                    cursor.execute(query, valor)
                     conexao.commit()
                     
                     alterou_assinatura, alterou_foto, = "Adicionado", "Adicionado"
                     auditoria_usuario_alterou_dados_func(session['email'], session['user'], nome, matricula, status, alterou_foto, alterou_assinatura)
 
 
-                    current_app.logger.info(f"Usuario {session['user']} E-mail {session['email']} atualizou os dados de {nome} com matricula {matricula} status {status}")
+                    # current_app.logger.info(f"Usuario {session['user']} E-mail {session['email']} atualizou os dados de {nome} com matricula {matricula} status {status}")
                     flash('Dados atualizadas com sucesso.', 'sucesso')
                     return redirect(url_for('carteiradigital.carteiradigital'))
                 else:

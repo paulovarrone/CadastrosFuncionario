@@ -133,7 +133,7 @@
     font-weight: bold;
   }
 
-  .form input[type="text"], #status, .form input[type="date"], .form input[type="number"] {
+  .form input[type="text"], #status, .form input[type="date"], .form input[type="number"], #cargo {
     padding: 8px;
     font-size: 14px;
     width: 100%;

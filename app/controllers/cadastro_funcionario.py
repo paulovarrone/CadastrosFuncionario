@@ -7,29 +7,44 @@ from app.controllers.auditoria.usuario_cadastra_func.usuario_cad_func import aud
 def cadastro_funcinarios():
     if request.method == 'POST':
         nome = request.form['nome']
-        matricula = request.form['matricula'].strip()
+        matricula = request.form['matricula']
+        cpf = request.form['cpf']
         nascimento = request.form['nascimento']
-        contratacao = request.form['contratacao']
+        cargo = request.form['cargo']
+        mae = request.form['mae']
+        pai = request.form['pai']
+        nacionalidade = request.form['nacionalidade']
         status = request.form['status']
-        identificacao_sexual = request.form['identificacao_sexual']
-        foto = request.files.get('foto')
-        assinatura = request.files.get('assinatura')
+        frase_estagiario = request.form.get('frase_estagiario', None)
+
+
+        # foto = request.files.get('foto')
+        # assinatura = request.files.get('assinatura')
 
         conexao = connection()
         cursor = conexao.cursor(dictionary=True)
 
 
 
-        foto_b64 = imagem_para_base64(foto)
-        assinatura_b64 = imagem_para_base64(assinatura)
+        # foto_b64 = imagem_para_base64(foto)
+        # assinatura_b64 = imagem_para_base64(assinatura)
 
         try:
             cursor.execute("SELECT * FROM funcionario WHERE matricula = %s", (matricula,))
             pessoa = cursor.fetchall()
             
             if not pessoa:
-                query = ("INSERT INTO funcionario(usuario_cadastrante,nome,matricula,nascimento,contratacao,status,identificacao_sexual,foto,assinatura) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)")
-                valores = (session['user'],nome,matricula,nascimento,contratacao,status,identificacao_sexual,foto_b64,assinatura_b64)
+                if frase_estagiario:
+                    query = ("INSERT INTO funcionario (NOME, MATRICULA, CPF, DATA_NASCIMENTO, CARGO, MAE, PAI, NACIONALIDADE, STATUS, FRASE_ESTAGIARIO) "
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+                    valores = (nome, matricula, cpf, nascimento, cargo, mae, pai, nacionalidade, status, frase_estagiario)
+                else:
+                    query = ("INSERT INTO funcionario (NOME, MATRICULA, CPF, DATA_NASCIMENTO, CARGO, MAE, PAI, NACIONALIDADE, STATUS) "
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
+                    valores = (nome, matricula, cpf, nascimento, cargo, mae, pai, nacionalidade, status)
+
+
+                # session['user']
 
                 cursor.execute(query, valores)
                 conexao.commit()

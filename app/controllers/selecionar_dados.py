@@ -20,8 +20,8 @@ def selecionar_dados_cadastrais():
             else:
                 # Salva a matrícula na sessão
                 session['matricula'] = matricula
-                auditoria_banco_select_funcionario(session['email'],session['user'],pessoa['nome'],matricula)
-                current_app.logger.info(f"Usuario {session['user']}, E-mail {session['email']}, selecionou dados do funcionario: {pessoa['nome']} com matricula: {matricula}")
+                auditoria_banco_select_funcionario(session['email'],session['user'],pessoa['NOME'],matricula)
+                current_app.logger.info(f"Usuario {session['user']}, E-mail {session['email']}, selecionou dados do funcionario: {pessoa['NOME']} com matricula: {matricula}")
         except Exception as e:
             flash(f"Erro {e}", 'erro')
 

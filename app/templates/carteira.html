@@ -37,7 +37,7 @@
       <form class="form-container" method="POST" action="{{ url_for('carteiradigital.carteiradigital') }}" enctype="multipart/form-data">
         <div class="form">
           <label for="matricula">Matrícula:</label>
-          <input type="number" id="matricula" name="matricula" placeholder="Digite a matrícula" required value="{{ pessoa.matricula if pessoa else '' }}">
+          <input type="text" id="matricula" name="matricula" placeholder="Digite a matrícula" required oninput="mascaraMatricula(this)" minlength="9" maxlength="9" value="{{ pessoa.matricula if pessoa else '' }}">
   
           <button id="selectFuncionario" type="submit"><b>SELECIONAR FUNCIONÁRIO</b></button>
         </div>
@@ -50,26 +50,35 @@
           <label for="status">Status:</label>
           <select id="status" name="status" required>
             <option value="">Selecione o Status</option>
-            <option value="Ativo">Ativo</option>
-            <option value="Inativo">Inativo</option>
-            <option value="Desligado">Desligado</option>
+            <option value="ATIVO">ATIVO</option>
+            <option value="SUSPENSO">SUSPENSO</option>
+            <option value="BLOQUEADO">BLOQUEADO</option>
           </select>
 
           <label for="name">Nome:</label>
-          <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.nome if pessoa else '' }}">
+          <input type="text" id="name" name="nome" placeholder="Nome do funcionário" readonly value="{{ pessoa.NOME if pessoa else '' }}">
   
           <label for="matricula">Matrícula:</label>
-          <input type="number" id="matricula" name="matricula" placeholder="Matrícula do funcionário" readonly required value="{{ pessoa.matricula if pessoa else '' }}">
+          <input type="text" id="matricula" name="matricula" placeholder="Matrícula do funcionário" readonly required value="{{ pessoa.MATRICULA if pessoa else '' }}">
+
+          <label for="cpf">CPF:</label>
+          <input type="text" id="cpf" name="cpf" placeholder="CPF do funcionário" readonly value="{{ pessoa.CPF if pessoa else '' }}">
   
           <label for="nascimento">Data de nascimento:</label>
-          <input type="date" id="nascimento" name="nascimento" readonly value="{{ pessoa.nascimento if pessoa else '' }}">
-  
-          <label for="contratacao">Data de contratação:</label>
-          <input type="date" id="contratacao" name="contratacao" readonly value="{{ pessoa.contratacao if pessoa else '' }}">
-          
-          <label for="identificacao_sexual">Identificação sexual do funcionário:</label>
-          <input type="text" id="identificacao_sexual" name="identificacao_sexual" value="{{ pessoa.identificacao_sexual if pessoa else '' }}" placeholder="Identificação sexual do funcionário" readonly>
+          <input type="date" id="nascimento" name="nascimento" readonly value="{{ pessoa.DATA_NASCIMENTO if pessoa else '' }}">
 
+          <label for="cargo">Cargo:</label>
+          <input type="text" id="cargo" name="cargo" placeholder="Cargo do funcionário" readonly value="{{ pessoa.CARGO if pessoa else '' }}">
+
+          <label for="mae">Nome da Mãe:</label>
+          <input type="text" id="mae" name="mae" placeholder="Nome da mãe do funcionário" readonly value="{{ pessoa.MAE if pessoa else '' }}">
+
+          <label for="pai">Nome do Pai:</label>
+          <input type="text" id="pai" name="pai" placeholder="Nome do pai do funcionário" readonly value="{{ pessoa.PAI if pessoa else '' }}">
+
+          <label for="nacionalidade">Nacionalidade:</label>
+          <input type="text" id="nacionalidade" name="nacionalidade" placeholder="Nacionalidade do funcionário" readonly value="{{ pessoa.NACIONALIDADE if pessoa else '' }}">
+          
         
           <button id="cadastrarCarteirinha" type="submit"><b>CADASTRAR CARTEIRA DIGITAL</b></button>
         </div>
@@ -95,6 +104,6 @@
   
     {% include 'includes/footer.jinja2' %}
   
-    <script src="../static/scripts/scripts.js"></script>
+    <script src="../static/scripts/matricula.js"></script>
   </body>
   </html>

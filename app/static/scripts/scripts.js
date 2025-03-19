@@ -46,6 +46,8 @@ function previewImage(event, previewId) {
   });
 
 
+
+
 function mascaraCPF(cpf) {
   let valor = cpf.value;
   valor = valor.replace(/\D/g, ''); // Remove tudo que não for dígito
