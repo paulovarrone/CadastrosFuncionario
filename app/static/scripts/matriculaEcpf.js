@@ -39,3 +39,24 @@ function previewImage(event, previewId) {
     preview.src = "";
   }
 }
+
+
+const interrogacao = document.querySelector('.interrogacao');
+  const overlay = document.getElementById('overlay');
+  const infoBox = document.getElementById('infoBox');
+  const closeButton = document.getElementById('closeButton');
+
+  interrogacao.addEventListener('click', () => {
+      overlay.style.display = 'block';
+      infoBox.style.display = 'block';
+  });
+
+  closeButton.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      infoBox.style.display = 'none';
+  });
+
+  overlay.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      infoBox.style.display = 'none';
+  });

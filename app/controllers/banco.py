@@ -49,7 +49,7 @@ def criar_funcionario():
             PAI VARCHAR(100),
             NACIONALIDADE VARCHAR(40) NOT NULL,
             STATUS VARCHAR(10) NOT NULL,
-            FRASE_ESTAGIARIO VARCHAR(165),
+            FRASE_ESTAGIARIO VARCHAR(165)
                
         ) 
     ''')
