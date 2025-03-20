@@ -31,7 +31,8 @@ def criar_banco():
             # updated_by VARCHAR(50) DEFAULT NULL,
             # created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             # updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            
+            # foto LONGTEXT DEFAULT NULL,
+            # assinatura LONGTEXT DEFAULT NULL  
 
 def criar_funcionario():
     conexao = connection()
@@ -49,8 +50,7 @@ def criar_funcionario():
             NACIONALIDADE VARCHAR(40) NOT NULL,
             STATUS VARCHAR(10) NOT NULL,
             FRASE_ESTAGIARIO VARCHAR(165),
-            foto LONGTEXT DEFAULT NULL,
-            assinatura LONGTEXT DEFAULT NULL     
+               
         ) 
     ''')
 
