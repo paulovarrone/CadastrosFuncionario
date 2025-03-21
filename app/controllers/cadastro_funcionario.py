@@ -6,14 +6,14 @@ from app.controllers.auditoria.usuario_cadastra_func.usuario_cad_func import aud
 
 def cadastro_funcinarios():
     if request.method == 'POST':
-        nome = request.form['nome']
+        nome = request.form['nome'].upper()
         matricula = request.form['matricula']
         cpf = request.form['cpf']
         nascimento = request.form['nascimento']
-        cargo = request.form['cargo']
-        mae = request.form['mae']
-        pai = request.form['pai']
-        nacionalidade = request.form['nacionalidade']
+        cargo = request.form['cargo'].upper()
+        mae = request.form['mae'].upper()
+        pai = request.form['pai'].upper()
+        nacionalidade = request.form['nacionalidade'].upper()
         status = request.form['status']
         frase_estagiario = request.form.get('frase_estagiario', None)
 
